@@ -1,0 +1,1030 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>F&amp;F Stage Strike</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#6865a6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,600..900,0..100,0..1&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #6865a6;
+  --bg-2: #5c599b;
+  --deep: #4a3b8c;
+  --cream: #fde9d3;
+  --panel: #fde9d3;
+  --panel-2: #f6dcc0;
+  --orange: #f08a2b;
+  --orange-ink: #d96f12;
+  --ink: #3a2f75;
+  --ink-2: #57498f;
+  --muted: #8a7cb3;
+  --on-bg: #fde9d3;
+  --on-bg-dim: #d9d2f0;
+  --p1: #f08a2b;
+  --p1-ink: #d96f12;
+  --p2: #4a3b8c;
+  --p2-ink: #4a3b8c;
+  --pick: #2fa36b;
+  --lock: #9b4ec2;
+  --sh: #3a2f75;
+  --on-accent: #fde9d3;
+  --logo: #fde9d3;
+  --logo-shade: #f08a2b;
+  --accent-ts: var(--sh);
+  color-scheme: light;
+}
+:root[data-skin="tennis"] {
+  --bg: #007c3e; --bg-2: #006a35; --deep: #0b4d2b;
+  --cream: #ece7da; --panel: #ece7da; --panel-2: #ddd8c2;
+  --orange: #dfe3a3; --orange-ink: #4f7d1c; --on-accent: #0b4d2b;
+  --ink: #0b4d2b; --ink-2: #1d5c39; --muted: #6a8a72;
+  --on-bg: #ece7da; --on-bg-dim: #c9e2c4;
+  --p1: #dfe3a3; --p1-ink: #4f7d1c; --p2: #0b4d2b; --p2-ink: #007c3e;
+  --pick: #dfe3a3; --lock: #3f6f8f; --sh: #06381f;
+  --logo: #dfe3a3; --logo-shade: transparent; --accent-ts: transparent;
+}
+:root[data-skin="grilled"] {
+  --bg: #f5391c; --bg-2: #e02f14; --deep: #6b1a10;
+  --cream: #ece6d8; --panel: #ece6d8; --panel-2: #e3d6c3;
+  --orange: #ffb52e; --orange-ink: #c42a12; --on-accent: #5a140b;
+  --ink: #5a140b; --ink-2: #74281c; --muted: #a8665a;
+  --on-bg: #ece6d8; --on-bg-dim: #ffd6c9;
+  --p1: #ffb52e; --p1-ink: #c42a12; --p2: #6b1a10; --p2-ink: #6b1a10;
+  --pick: #ffb52e; --lock: #8a3a7a; --sh: #4a1009;
+  --logo: #ece6d8; --logo-shade: transparent; --accent-ts: transparent;
+}
+:root[data-skin="cannery"] {
+  --bg: #ddd5c6; --bg-2: #cfc6b4; --deep: #3d8fca;
+  --cream: #f7f2e8; --panel: #f7f2e8; --panel-2: #ebe4d5;
+  --orange: #e8361a; --orange-ink: #cf2b12; --on-accent: #f7f2e8;
+  --ink: #1d5a88; --ink-2: #2b6c9c; --muted: #6f93b0;
+  --on-bg: #1d5a88; --on-bg-dim: #5d84a3;
+  --p1: #e8361a; --p1-ink: #cf2b12; --p2: #3d8fca; --p2-ink: #2b78b3;
+  --pick: #3d8fca; --lock: #7a5aa8; --sh: #1b4b73;
+  --logo: #5ea6d6; --logo-shade: transparent;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--on-bg);
+  font: 700 16px/1.4 "Nunito", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden; min-height: 100vh;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 32px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+
+/* the poster face: chunky soft serif with an orange-and-purple drop */
+.display, header.top h1, h2.poster, .turn .who, .pickhero .title, .score .num {
+  font-family: "Fraunces", Georgia, serif; font-weight: 900; font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+.extrude {
+  color: var(--cream);
+  -webkit-text-stroke: 1.5px var(--sh); paint-order: stroke fill;
+  text-shadow: 2px 2px 0 var(--sh), 3px 3px 0 var(--orange), 4px 4px 0 var(--orange), 5px 5px 0 var(--sh);
+}
+
+/* masthead */
+header.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 8px;
+  display: flex; align-items: center; gap: 10px; background: var(--bg);
+}
+header.top h1 { flex: 1; min-width: 0; margin: 0; position: relative; display: flex; align-items: flex-end; gap: 4px; line-height: 0; }
+header.top h1 .logo { display: block; position: relative; flex: 0 1 auto; width: min(140px, 40vw); min-width: 0; aspect-ratio: 520 / 162; }
+header.top h1 .logo i { position: absolute; inset: 0; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
+header.top h1 .logo .lsh { background: var(--logo-shade); -webkit-mask-image: url(ff-logo-shade.png); mask-image: url(ff-logo-shade.png); }
+header.top h1 .logo .lfc { background: var(--logo); -webkit-mask-image: url(ff-logo-face.png); mask-image: url(ff-logo-face.png); }
+header.top h1 .ss {
+  flex: 0 0 auto; margin-bottom: 2px; line-height: 1; white-space: nowrap;
+  font: 900 13px/1 "Fraunces", serif; font-variation-settings: "SOFT" 100, "WONK" 1; text-transform: lowercase;
+  color: var(--on-accent); background: var(--orange); padding: 5px 9px; border-radius: 8px; border: 2px solid var(--sh);
+  transform: rotate(-6deg); box-shadow: 2px 2px 0 var(--sh);
+}
+.iconbtn {
+  min-width: 44px; height: 44px; border-radius: 12px; border: 2px solid var(--sh);
+  background: var(--cream); color: var(--ink); display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 0 12px; font-weight: 900; box-shadow: 3px 3px 0 var(--sh);
+  transition: transform .1s ease, box-shadow .1s ease;
+}
+.iconbtn:disabled { opacity: .45; cursor: default; box-shadow: none; }
+.iconbtn svg { width: 19px; height: 19px; }
+.btn {
+  min-height: 54px; width: 100%; padding: 10px 16px; border-radius: 14px; border: 2px solid var(--sh);
+  background: var(--cream); color: var(--ink); font: 900 17px/1.1 "Fraunces", serif; font-variation-settings: "SOFT" 100;
+  box-shadow: 4px 4px 0 var(--sh); transition: transform .1s ease, box-shadow .1s ease;
+}
+.btn.primary { background: var(--orange); color: var(--on-accent); text-shadow: 1px 1px 0 var(--accent-ts); }
+.btn.p1 { background: var(--p1); color: var(--on-accent); text-shadow: 1px 1px 0 var(--accent-ts); }
+.btn.p2 { background: var(--deep); color: var(--cream); }
+.btn.danger { color: var(--orange-ink); }
+.armed { background: var(--orange) !important; color: var(--on-accent) !important; }
+.btn:active, .iconbtn:not(:disabled):active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--sh); }
+.row { display: flex; gap: 12px; }
+.row > * { flex: 1; min-width: 0; }
+
+/* panels: cream stickers on the purple */
+.card {
+  position: relative; background: var(--panel); color: var(--ink-2);
+  border: 2px solid var(--sh); border-radius: 20px; padding: 16px; margin: 16px 0;
+  box-shadow: 5px 5px 0 var(--sh);
+}
+.card h2 {
+  display: inline-block; margin: 0 0 12px; padding: 5px 12px; border-radius: 10px;
+  background: var(--orange); color: var(--on-accent); transform: rotate(-2deg);
+  font: 900 15px/1.1 "Fraunces", serif; font-variation-settings: "SOFT" 100, "WONK" 1; text-transform: lowercase;
+  box-shadow: 2px 2px 0 var(--sh);
+}
+label.field, div.field { display: block; margin: 14px 0; }
+label.field > span, .field > .muted { display: block; font-size: 13px; font-weight: 800; color: var(--muted); margin-bottom: 6px; text-transform: lowercase; }
+input[type=text], select {
+  width: 100%; min-height: 50px; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--sh);
+  background: var(--panel-2); color: var(--ink); font-weight: 800;
+}
+input[type=text]:focus, select:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px color-mix(in srgb, var(--orange) 35%, transparent); }
+.seg { display: flex; border: 2px solid var(--sh); border-radius: 14px; overflow: hidden; box-shadow: 3px 3px 0 var(--sh); }
+.seg button { flex: 1; min-height: 46px; border: 0; background: var(--panel-2); color: var(--ink-2); font: 900 15px/1 "Fraunces", serif; font-variation-settings: "SOFT" 100; }
+.seg button + button { border-left: 2px solid var(--sh); }
+.seg button.on { background: var(--orange); color: var(--on-accent); text-shadow: 1px 1px 0 var(--accent-ts); }
+
+/* scoreboard */
+.score { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 8px; }
+.score .pl { display: flex; flex-direction: column; min-width: 0; }
+.score .pl.r { align-items: flex-end; text-align: right; }
+.score .nm { font: 900 18px/1.1 "Fraunces", serif; font-variation-settings: "SOFT" 100, "WONK" 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.score .pl.a .nm { color: var(--p1-ink); }
+.score .pl.b .nm { color: var(--p2-ink); }
+.score .num {
+  font-size: 58px; line-height: 1; color: var(--cream); font-variant-numeric: tabular-nums;
+  -webkit-text-stroke: 1.5px var(--sh); paint-order: stroke fill;
+  text-shadow: 2px 2px 0 var(--sh), 3px 3px 0 var(--orange), 4px 4px 0 var(--orange), 5px 5px 0 var(--sh);
+}
+.score .mid {
+  justify-self: center; text-align: center; font-weight: 900; font-size: 13px; line-height: 1.25;
+  color: var(--orange-ink); background: var(--cream); border: 2px solid var(--orange); border-radius: 10px;
+  padding: 5px 9px; transform: rotate(-4deg); margin-bottom: 8px;
+}
+.tools { display: flex; gap: 12px; margin-top: 14px; }
+.tools .iconbtn { flex: 1; }
+
+/* whose turn: a big sticker in the player's colour */
+.turn {
+  position: relative; margin: 18px 0; padding: 16px 18px; border-radius: 20px; border: 2px solid var(--sh);
+  display: flex; flex-direction: column; gap: 4px; box-shadow: 5px 5px 0 var(--sh);
+  background: var(--panel); color: var(--ink-2);
+}
+.turn.p1 { background: var(--orange); color: var(--on-accent); }
+.turn.p2 { background: var(--deep); color: var(--cream); }
+.turn .who {
+  font-size: 28px; line-height: 1.05; overflow-wrap: anywhere; color: var(--cream);
+  -webkit-text-stroke: 1.5px var(--sh); paint-order: stroke fill;
+  text-shadow: 2px 2px 0 var(--sh), 3px 3px 0 var(--orange), 4px 4px 0 var(--orange), 5px 5px 0 var(--sh);
+}
+.turn.p1 .who { text-shadow: 2px 2px 0 var(--sh), 3px 3px 0 var(--deep), 4px 4px 0 var(--deep), 5px 5px 0 var(--sh); }
+.turn.neutral { background: var(--deep); color: var(--cream); }
+.turn.neutral .who { color: var(--cream); }
+.card.pickhero { background: var(--deep); color: var(--cream); }
+.card.pickhero .sub, .card.pickhero .muted { color: var(--on-bg-dim); }
+.turn .what { font-size: 15px; }
+.turn .pass {
+  align-self: flex-start; margin-bottom: 6px; padding: 4px 10px; border-radius: 9px; transform: rotate(-3deg);
+  background: var(--cream); color: var(--ink); border: 2px solid var(--sh);
+  font: 900 13px/1.2 "Fraunces", serif; font-variation-settings: "SOFT" 100; text-transform: lowercase;
+}
+.turn.p1 .pass { color: var(--orange-ink); }
+
+/* stage figures sit straight on the purple, like the event page */
+.stagecard { margin: 22px 0 10px; }
+h2.poster {
+  margin: 0 0 14px; text-align: center; font-size: 34px; line-height: 1; text-transform: capitalize;
+  color: var(--cream); -webkit-text-stroke: 1.5px var(--sh); paint-order: stroke fill;
+  text-shadow: 2px 2px 0 var(--sh), 3px 3px 0 var(--orange), 4px 4px 0 var(--orange), 5px 5px 0 var(--sh);
+}
+.stages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 14px; }
+@media (min-width: 600px) { .stages { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.stage {
+  position: relative; display: flex; flex-direction: column; align-items: stretch; text-align: center;
+  padding: 0; border: 0; background: transparent; width: 100%; min-width: 0; color: inherit;
+}
+.stage .tw {
+  position: relative; display: block; overflow: hidden; border-radius: 10px;
+  border: 3px solid var(--orange); background: var(--deep); box-shadow: 4px 4px 0 var(--sh);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.stage .thumb { aspect-ratio: 4 / 3; width: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--cream); font-size: 24px; }
+.stage .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: filter .2s ease, opacity .2s ease; }
+.stage .info { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 2px 0; min-width: 0; }
+.stage .name { font: 900 14px/1.15 "Fraunces", serif; font-variation-settings: "SOFT" 100; text-transform: uppercase; letter-spacing: .02em; color: var(--on-bg); overflow-wrap: anywhere; }
+.stage .tag { font-size: 11px; font-weight: 900; text-transform: lowercase; color: var(--on-bg-dim); }
+.stage:disabled { cursor: default; }
+.stage.tappable.t-p1 .tw { border-color: var(--orange); box-shadow: 0 0 0 3px var(--cream), 5px 5px 0 3px var(--sh); }
+.stage.tappable.t-p2 .tw { border-color: var(--deep); box-shadow: 0 0 0 3px var(--cream), 5px 5px 0 3px var(--sh); }
+.stage.tappable .tag { color: var(--cream); background: var(--sh); padding: 2px 8px; border-radius: 6px; }
+.stage.tappable.t-p1 .tag { background: var(--orange-ink); }
+.stage.tappable:active .tw { transform: translate(3px, 3px); }
+.stage.struck .tw, .stage.banned .tw, .stage.locked .tw { border-color: var(--bg-2); box-shadow: none; }
+.stage.struck .thumb img, .stage.banned .thumb img, .stage.locked .thumb img { filter: grayscale(1) contrast(.85); opacity: .35; }
+.stage.struck .name, .stage.banned .name { text-decoration: line-through; text-decoration-thickness: 2px; color: var(--on-bg-dim); }
+.stage .tag.p1 { color: var(--orange); }
+.stage .tag.p2 { color: var(--cream); }
+.stage .tag.pk { color: var(--cream); }
+.stage .tag.lk { color: var(--cream); opacity: .8; }
+/* stickers slapped on the picture */
+.stage .x {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-8deg);
+  padding: 4px 10px; border-radius: 9px; border: 2px solid var(--cream); pointer-events: none; white-space: nowrap;
+  font: 900 16px/1.1 "Fraunces", serif; font-variation-settings: "SOFT" 100, "WONK" 1; text-transform: lowercase;
+  color: var(--cream); background: var(--sh); box-shadow: 3px 3px 0 var(--sh);
+}
+.stage .x.p1 { background: var(--orange); color: var(--on-accent); }
+.stage .x.p2 { background: var(--deep); }
+.stage .x.pk { background: var(--cream); color: var(--orange-ink); border-color: var(--orange); transform: translate(-50%, -50%) rotate(6deg); font-size: 18px; }
+.stage .x.lk { background: var(--lock); font-size: 13px; }
+.stage.picked .tw { border-color: var(--cream); box-shadow: 0 0 0 3px var(--orange), 6px 6px 0 3px var(--sh); }
+
+.pickhero { display: flex; flex-direction: column; gap: 12px; }
+.pickhero .img { border-radius: 12px; border: 3px solid var(--orange); box-shadow: 4px 4px 0 var(--sh); aspect-ratio: 4/3; overflow: hidden; background: var(--deep); display: flex; align-items: center; justify-content: center; font-size: 44px; font-weight: 900; color: var(--cream); }
+.pickhero .img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pickhero .title {
+  font-size: 34px; line-height: 1.02; color: var(--cream); text-transform: lowercase;
+  -webkit-text-stroke: 1.5px var(--sh); paint-order: stroke fill;
+  text-shadow: 2px 2px 0 var(--sh), 3px 3px 0 var(--orange), 4px 4px 0 var(--orange), 5px 5px 0 var(--sh);
+}
+.pickhero .sub { color: var(--muted); font-weight: 800; margin-top: 6px; }
+
+.hist { list-style: none; margin: 0; padding: 0; }
+.hist li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 2px dashed color-mix(in srgb, var(--sh) 25%, transparent); }
+.hist li:first-child { border-top: 0; padding-top: 0; }
+.hist .g { flex: 0 0 auto; font: 900 13px/1 "Fraunces", serif; color: var(--cream); background: var(--deep); padding: 6px 8px; border-radius: 8px; transform: rotate(-4deg); }
+.hist .s { flex: 1; min-width: 0; overflow-wrap: anywhere; color: var(--ink); font-weight: 800; }
+.hist .w { flex: 0 0 auto; font: 900 16px/1 "Fraunces", serif; font-variation-settings: "SOFT" 100, "WONK" 1; }
+.hist .w.p1 { color: var(--p1-ink); }
+.hist .w.p2 { color: var(--p2-ink); }
+.muted { color: var(--muted); }
+.card .muted { color: var(--muted); }
+.small { font-size: 14px; }
+.center { text-align: center; }
+p.muted.center, body > .wrap > main > p { color: var(--on-bg-dim); }
+.stack > * + * { margin-top: 12px; }
+
+/* settings */
+.slist { list-style: none; padding: 0; margin: 0 0 12px; }
+.slist li { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-top: 2px dashed color-mix(in srgb, var(--sh) 20%, transparent); }
+.slist li:first-child { border-top: 0; }
+.slist .mini { flex: 0 0 56px; height: 42px; border-radius: 8px; border: 2px solid var(--orange); overflow: hidden; background: var(--deep); display: flex; align-items: center; justify-content: center; color: var(--cream); font-weight: 900; font-size: 13px; }
+.slist .mini img { width: 100%; height: 100%; object-fit: cover; }
+.slist .n { flex: 1; min-width: 0; overflow-wrap: anywhere; color: var(--ink); font-weight: 800; }
+.slist .iconbtn { min-width: 40px; height: 40px; padding: 0 8px; box-shadow: 2px 2px 0 var(--sh); }
+.stepper { display: flex; align-items: center; gap: 14px; }
+.stepper .val { font: 900 30px/1 "Fraunces", serif; min-width: 2ch; text-align: center; color: var(--ink); font-variant-numeric: tabular-nums; }
+.err { color: var(--orange-ink); font-size: 14px; margin-top: 4px; font-weight: 800; }
+.addrow { display: flex; gap: 10px; }
+.addrow select, .addrow input { flex: 1; min-width: 0; }
+.addrow .iconbtn { flex: 0 0 auto; height: 50px; }
+.skins { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.skin { min-height: 64px; border-radius: 14px; border: 2px solid var(--sh); box-shadow: 3px 3px 0 var(--sh); padding: 8px 10px;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 6px; text-align: left;
+  font: 900 17px/1 "Fraunces", serif; font-variation-settings: "SOFT" 100, "WONK" 1; }
+.skin .dots { display: flex; gap: 4px; }
+.skin .dots b { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid currentColor; }
+.skin.on { box-shadow: 0 0 0 3px var(--orange), 4px 4px 0 3px var(--sh); }
+.skin.on::after { content: "on"; position: absolute; top: 6px; right: 8px; font: 900 11px/1 "Nunito", sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+.skin { position: relative; }
+.foot { color: var(--on-bg-dim); font-size: 12px; text-align: center; margin-top: 26px; }
+
+/* ---------- motion ---------- */
+:root { --ease: cubic-bezier(.2, .8, .2, 1); --slash: -14deg; }
+header.top h1 .logo { animation: logoIn .8s var(--ease) both; }
+header.top h1 .ss { animation: slapSticker .5s .45s var(--ease) both; }
+@keyframes logoIn { from { opacity: 0; transform: translateY(14px) rotate(-3deg) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes slapSticker { 0% { opacity: 0; transform: scale(1.8) rotate(-18deg); } 60% { opacity: 1; transform: scale(.94) rotate(-4deg); } 100% { opacity: 1; transform: rotate(-6deg); } }
+
+.enter .card, .enter .turn, .enter .stagecard > h2 { opacity: 0; animation: up .6s var(--ease) forwards; }
+.enter .card:nth-of-type(1) { animation-delay: 0s; }
+.enter .turn { animation-delay: .08s; }
+.enter .stagecard > h2 { animation-delay: .14s; }
+.enter .card:nth-of-type(2) { animation-delay: .16s; }
+.enter .card:nth-of-type(n+3) { animation-delay: .26s; }
+.enter .stage { opacity: 0; animation: up .55s var(--ease) forwards; animation-delay: calc(.22s + var(--i, 0) * 55ms); }
+.enter .card h2 { opacity: 0; animation: slap .5s .3s var(--ease) forwards; }
+
+.turn { overflow: hidden; isolation: isolate; }
+.turn::after {
+  content: ""; position: absolute; inset: -2px; z-index: 2; pointer-events: none;
+  background: var(--cream); transform: scaleX(0); transform-origin: left center;
+}
+.turn.swap::after, .enter .turn::after { animation: wipe .7s var(--ease) forwards; }
+.turn.swap .who, .enter .turn .who { animation: titleIn2 .7s .3s var(--ease) both; }
+.turn.swap .what { animation: up .5s .38s var(--ease) both; }
+.turn.swap .pass, .enter .turn .pass { animation: slap .45s .42s var(--ease) both; }
+
+@media (hover: hover) { .stage.tappable:hover .tw { transform: translate(-2px, -2px); } }
+.stage.fresh .x, .enter .stage.picked .x { animation: sticker .45s var(--ease) both; }
+.stage.fresh .x.pk, .enter .stage.picked .x.pk { animation: stickerPick .5s var(--ease) both; }
+.stage.fresh .thumb img { animation: inkFade .45s var(--ease) both; }
+.stage.fresh .tw { animation: thud .35s .08s var(--ease) both; }
+
+.herowrap { position: relative; }
+.herowrap::after {
+  content: ""; position: absolute; inset: 3px; border-radius: 9px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5) 50%, transparent) no-repeat;
+  background-size: 25% 100%; background-position: -40% 0; filter: blur(4px);
+  animation: sweepBg 4.5s 1.4s linear infinite;
+}
+.slashes { position: absolute; inset: 3px; border-radius: 9px; overflow: hidden; pointer-events: none; }
+.slashes i {
+  position: absolute; left: -15%; width: 130%; display: block; background: var(--cream);
+  transform: rotate(var(--slash)) scaleX(0); transform-origin: left center;
+  animation: slashCut 1.3s var(--ease) forwards;
+}
+.slashes .s1 { top: 26%; height: 3px; animation-delay: .1s; }
+.slashes .s2 { top: 32%; height: 14px; animation-delay: .2s; background: var(--orange); }
+.slashes .s3 { top: 64%; height: 6px; animation-delay: .3s; background: var(--deep); }
+.slashes .s4 { top: 70%; height: 2px; animation-delay: .4s; }
+.enter .pickhero .title { animation: titleIn2 .8s .25s var(--ease) both; }
+
+.btn, .iconbtn { position: relative; overflow: hidden; isolation: isolate; }
+.btn::before, .iconbtn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--orange) 28%, transparent);
+  transform: translateX(-110%) skewX(-20deg); transition: transform .45s var(--ease);
+}
+.btn.primary::before, .btn.p1::before, .btn.p2::before { background: color-mix(in srgb, var(--cream) 22%, transparent); }
+@media (hover: hover) { .btn:hover::before, .iconbtn:not(:disabled):hover::before { transform: translateX(0) skewX(0); } }
+.btn:active::before, .iconbtn:not(:disabled):active::before { transform: translateX(0) skewX(0); transition-duration: .2s; }
+
+@keyframes titleIn { to { transform: none; } }
+@keyframes titleIn2 { from { opacity: 0; transform: translateY(60%) rotate(3deg); } to { opacity: 1; transform: none; } }
+@keyframes up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes slap { 0% { opacity: 0; transform: scale(1.8) rotate(-12deg); } 60% { opacity: 1; transform: scale(.94) rotate(-1deg); } 100% { opacity: 1; } }
+@keyframes wipe {
+  0% { transform: scaleX(0); transform-origin: left center; }
+  45% { transform: scaleX(1); transform-origin: left center; }
+  46% { transform: scaleX(1); transform-origin: right center; }
+  100% { transform: scaleX(0); transform-origin: right center; }
+}
+@keyframes sticker {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(-24deg) scale(2.2); }
+  60% { opacity: 1; transform: translate(-50%, -50%) rotate(-5deg) scale(.92); }
+  100% { opacity: 1; transform: translate(-50%, -50%) rotate(-8deg) scale(1); }
+}
+@keyframes stickerPick {
+  0% { opacity: 0; transform: translate(-50%, -50%) rotate(20deg) scale(2.4); }
+  60% { opacity: 1; transform: translate(-50%, -50%) rotate(3deg) scale(.92); }
+  100% { opacity: 1; transform: translate(-50%, -50%) rotate(6deg) scale(1); }
+}
+@keyframes inkFade { from { filter: none; opacity: 1; } }
+@keyframes thud { 0% { transform: none; } 40% { transform: translate(2px, 2px) scale(.985); } 100% { transform: none; } }
+@keyframes slashCut {
+  0% { transform: rotate(var(--slash)) scaleX(0); opacity: 1; }
+  45% { transform: rotate(var(--slash)) scaleX(1); opacity: 1; }
+  100% { transform: rotate(var(--slash)) scaleX(1); opacity: 0; }
+}
+@keyframes sweepBg { 0% { background-position: -40% 0; } 60%, 100% { background-position: 140% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition: none !important; }
+}
+</style>
+<style>
+/* what the Artifact viewer's wrapper used to provide */
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1><span class="logo" role="img" aria-label="Flashbacks &amp; Friendlies"><i class="lsh"></i><i class="lfc"></i></span><span class="ss">stage strike</span></h1>
+    <button class="iconbtn" id="navBtn" data-action="nav" aria-label="Settings"></button>
+  </header>
+  <main id="app"></main>
+</div>
+
+<script>
+(function () {
+"use strict";
+
+/* ---------- stage catalogue (HDR names; ids are the game's stage codes) ---------- */
+const CATALOGUE = [
+  ["animal_village","Smashville"],["animal_city","Town and City"],["animal_island","Tortimer Island"],
+  ["balloonfight","Balloon Fight"],["battlefield","Battlefield"],["battlefieldl","Big Battlefield"],
+  ["bayo_clock","Umbra Clock Tower"],["bossstage_final2","Deadline"],["brave_altar","Yggdrasil's Altar"],
+  ["buddy_spiral","Spiral Mountain"],["demon_dojo","Mishima Dojo"],["dk_jungle","Bramble Blast"],
+  ["dk_lodge","Jungle Japes"],["dk_waterfall","Kongo Falls"],["dolly_stadium","King of Fighters Stadium"],
+  ["dracula_castle","Dracula's Castle"],["duckhunt","Duck Hunt"],["end","Final Destination"],
+  ["fe_arena","Arena Ferox"],["fe_colloseum","Coliseum"],["fe_shrine","Garreg Mach Monastery"],
+  ["fe_siege","Castle Siege"],["ff_cave","Northern Cave"],["ff_midgar","Midgar"],["flatzonex","Flat Zone X"],
+  ["fox_corneria","Corneria"],["fox_lylatcruise","Lylat Cruise"],["fox_venom","Venom"],
+  ["fzero_bigblue","Big Blue"],["fzero_mutecity3ds","Mute City SNES"],["fzero_porttown","Port Town Aero Dive"],
+  ["icarus_angeland","Reset Bomb Forest"],["icarus_skyworld","Skyworld"],["icarus_uprising","Palutena's Temple"],
+  ["ice_top","Summit"],["jack_mementoes","Mementos"],["kart_circuitfor","Mario Circuit"],
+  ["kart_circuitx","Figure-8 Circuit"],["kirby_cave","The Great Cave Offensive"],["kirby_fountain","Fountain of Dreams"],
+  ["kirby_gameboy","Butter Building"],["kirby_greens","Green Greens"],["kirby_halberd","Halberd"],
+  ["kirby_pupupu64","Dream Land"],["luigimansion","Luigi's Mansion"],["mario_3dland","3D Land"],
+  ["mario_castle64","Peach's Castle"],["mario_castledx","Bowser's Kingdom"],["mario_dolpic","Delfino Plaza"],
+  ["mario_galaxy","Mario Galaxy"],["mario_maker","Super Mario Maker"],["mario_newbros2","World 1-2"],
+  ["mario_odyssey","New Donk City Hall"],["mario_paper","Paper Mario"],["mario_past64","Mushroom Kingdom"],
+  ["mario_pastusa","Mushroom Kingdom II"],["mario_pastx","Mushroomy Kingdom"],["mario_rainbow","Rainbow Cruise"],
+  ["mario_uworld","Snake Train Chamber"],["mariobros","Mario Bros."],["metroid_kraid","Kraid's Lair"],
+  ["metroid_norfair","Norfair"],["metroid_orpheon","Frigate Husk"],["metroid_zebesdx","Brinstar"],
+  ["mg_shadowmoses","Shadow Moses Island"],["mother_fourside","Fourside"],["mother_magicant","Magicant"],
+  ["mother_newpork","New Pork City"],["mother_onett","Onett"],["nintendogs","Nintendogs"],["pac_land","Pac-Land"],
+  ["pickel_world","Minecraft World"],["pictochat","PictoChat 2"],["pikmin_garden","Garden of Hope"],
+  ["pikmin_planet","Distant Planet"],["pilotwings","Pilotwings"],["plankton","Mii Maker"],
+  ["poke_kalos","Kalos Pokémon League"],["poke_stadium","Pokémon Stadium"],["poke_stadium2","Pokémon Stadium 3"],
+  ["poke_tengam","Spear Pillar"],["poke_tower","Prism Tower"],["poke_unova","Unova Pokémon League"],
+  ["poke_yamabuki","Saffron City"],["punchoutsb","Boxing Ring"],["randomnormal","Random"],["rock_wily","Wily Castle"],
+  ["sf_suzaku","Suzaku Castle"],["sonic_greenhill","Sky Sanctuary Zone"],["sonic_windyhill","Windy Hill Zone"],
+  ["spla_parking","Moray Towers"],["streetpass","Find Mii"],["tantan_spring","Spring Stadium"],
+  ["tomodachi","Tomodachi Life"],["trail_castle","Hollow Bastion"],["training","Training"],["wario_gamer","Gamer"],
+  ["wario_madein","Wario Land"],["wiifit","Wii Fit Studio"],["wreckingcrew","Realm of Gamecube"],
+  ["wufuisland","Wuhu Island"],["xeno_alst","Cloud Sea of Alrest"],["xeno_gaur","Gaur Plain"],
+  ["yoshi_cartboard","Yoshi's Woolly World"],["yoshi_island","Yoshi's Island"],["yoshi_story","Yoshi's Story"],
+  ["yoshi_yoster","Dinosaur Land"],["zelda_gerudo","Gerudo Valley"],["zelda_greatbay","Great Bay"],
+  ["zelda_hyrule","Hyrule Castle"],["zelda_oldin","Royal Sanctum"],["zelda_pirates","Ganon's Tower"],
+  ["zelda_skyward","Skyloft"],["zelda_temple","Temple"],["zelda_tower","Poké Floats"],["zelda_train","Spirit Train"]
+];
+const CAT = new Map(CATALOGUE.map(([id, name]) => [id, { id, name, img: "stages/" + id + ".jpg" }]));
+const RANDOM_ID = "randomnormal";
+
+/* HDR official tourney mode list (hdr-stages/tourney_mode_official.json) */
+const PRESETS = {
+  ff2026: {
+    label: "Flashbacks & Friendlies 2026",
+    starters: ["trail_castle", "fe_shrine", "battlefield", "animal_village", "metroid_orpheon"],
+    counterpicks: ["kirby_fountain", "wreckingcrew", "dk_jungle", "sonic_greenhill"]
+  },
+  hdr: {
+    label: "HDR official tourney list",
+    starters: ["trail_castle", "fe_shrine", "battlefield", "animal_village", "metroid_orpheon"],
+    counterpicks: ["ff_cave", "wreckingcrew", RANDOM_ID, "dk_jungle", "sonic_greenhill"]
+  }
+};
+const DEFAULTS = {
+  starters: PRESETS.ff2026.starters.slice(),
+  counterpicks: PRESETS.ff2026.counterpicks.slice(),
+  bans: 3,
+  strikeOrder: "1-2-1",
+  clause: "dsr",
+  bestOf: 3,
+  custom: {}
+};
+const CLAUSES = {
+  off: "Off",
+  dsr: "DSR: can't pick a stage you've won on",
+  mdsr: "Modified DSR: can't pick the stage of your last win",
+  norepeat: "No repeats: can't pick any stage already played"
+};
+
+/* ---------- storage (every access wrapped) ---------- */
+const KEY_SETTINGS = "hdrStageStrike.settings.v1";
+const KEY_SET = "hdrStageStrike.set.v1";
+const KEY_SKIN = "hdrStageStrike.skin";
+const SKINS = {
+  banner:  { name: "Banner",  bg: "#6865a6", fg: "#fde9d3", dots: ["#fde9d3", "#f08a2b", "#3a2f75"] },
+  tennis:  { name: "Tennis",  bg: "#007c3e", fg: "#ece7da", dots: ["#ece7da", "#dfe3a3", "#0b4d2b"] },
+  grilled: { name: "Grilled", bg: "#f5391c", fg: "#ece6d8", dots: ["#ece6d8", "#ffb52e", "#6b1a10"] },
+  cannery: { name: "Cannery", bg: "#ddd5c6", fg: "#1d5a88", dots: ["#5ea6d6", "#e8361a", "#f7f2e8"] },
+};
+function load(key) {
+  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+}
+function save(key, val) {
+  try {
+    if (val === null) localStorage.removeItem(key); else localStorage.setItem(key, JSON.stringify(val));
+  } catch (e) { /* storage unavailable: app still works for this session */ }
+}
+
+const clone = (o) => JSON.parse(JSON.stringify(o));
+let settings = Object.assign(clone(DEFAULTS), load(KEY_SETTINGS) || {});
+if (!settings.custom) settings.custom = {};
+let set = load(KEY_SET);
+let skin = load(KEY_SKIN);
+if (!SKINS[skin]) skin = "banner";
+function applySkin() {
+  const r = document.documentElement;
+  if (skin === "banner") r.removeAttribute("data-skin"); else r.setAttribute("data-skin", skin);
+  const m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute("content", SKINS[skin].bg);
+}
+applySkin();
+let view = "set";
+let ui = { addTarget: null, flash: "" };
+
+function stageInfo(id) {
+  if (CAT.has(id)) return CAT.get(id);
+  const c = settings.custom[id] || (set && set.custom && set.custom[id]);
+  return { id, name: c ? c.name : id, img: null };
+}
+function hue(str) { let h = 0; for (const ch of str) h = (h * 31 + ch.charCodeAt(0)) % 360; return h; }
+function initials(name) { return name.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase(); }
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+function thumbHTML(id, cls) {
+  const s = stageInfo(id);
+  if (s.img) return `<div class="${cls}"><img src="${s.img}" alt="" loading="lazy" onerror="this.parentNode.style.background='hsl(${hue(id)} 45% 42%)';this.replaceWith(document.createTextNode('${esc(initials(s.name))}'))"></div>`;
+  return `<div class="${cls}" style="background:hsl(${hue(id)} 45% 42%)">${esc(initials(s.name))}</div>`;
+}
+
+function parseOrder(str) {
+  const parts = String(str).trim().split(/[\s,\-]+/).filter(Boolean);
+  if (!parts.length) return null;
+  const nums = parts.map(Number);
+  if (nums.some(n => !Number.isInteger(n) || n < 1 || n > 9)) return null;
+  return nums;
+}
+
+/* ---------- set model ---------- */
+function persist() { save(KEY_SET, set); }
+function commit(mutator) {
+  const snap = JSON.stringify(Object.assign({}, set, { hist: undefined }));
+  mutator();
+  set.hist = (set.hist || []).concat([snap]).slice(-150);
+  persist(); render();
+}
+function undo() {
+  if (!set || !set.hist || !set.hist.length) return;
+  const hist = set.hist.slice();
+  const prev = JSON.parse(hist.pop());
+  prev.hist = hist;
+  set = prev; persist(); render();
+}
+function newSet(names, bestOf) {
+  set = {
+    names, bestOf, score: [0, 0], games: [], phase: "decide",
+    flipWinner: null, flipBy: null, custom: clone(settings.custom), hist: []
+  };
+  persist(); render();
+}
+const need = () => Math.floor(set.bestOf / 2) + 1;
+const other = (p) => 1 - p;
+const pname = (p) => set.names[p];
+
+function startGame1(first) {
+  const pool = settings.starters.slice();
+  set.cur = { type: "strike", first, pool, order: parseOrder(settings.strikeOrder) || [1, 2, 1], struck: [], stage: null, random: false };
+  set.phase = "game";
+  if (pool.length === 1) finishPick(pool[0]);
+}
+function startCounterpick() {
+  const last = set.games[set.games.length - 1];
+  const pool = uniq(settings.starters.concat(settings.counterpicks));
+  set.cur = {
+    type: "cp", pool, bans: [], banCount: settings.bans, clause: settings.clause,
+    banner: last.winner, picker: other(last.winner), stage: null, random: false
+  };
+  set.phase = "game";
+}
+function uniq(a) { return a.filter((x, i) => a.indexOf(x) === i); }
+
+/* stages the counterpicker may not choose */
+function lockedFor(p, clause) {
+  const out = new Set();
+  if (clause === "dsr") set.games.forEach(g => { if (g.winner === p) out.add(g.stage); });
+  else if (clause === "mdsr") { for (let i = set.games.length - 1; i >= 0; i--) if (set.games[i].winner === p) { out.add(set.games[i].stage); break; } }
+  else if (clause === "norepeat") set.games.forEach(g => out.add(g.stage));
+  return out;
+}
+
+/* what happens next in the current game */
+function turn() {
+  const c = set.cur;
+  if (c.stage) return { action: "play" };
+  if (c.type === "strike") {
+    const remaining = c.pool.filter(id => !c.struck.some(s => s.id === id));
+    if (remaining.length <= 1) return { action: "auto", remaining };
+    let cum = 0;
+    for (let i = 0; i < c.order.length; i++) {
+      cum += c.order[i];
+      if (c.struck.length < cum) {
+        const left = Math.min(cum - c.struck.length, remaining.length - 1);
+        return { action: "strike", player: (c.first + i) % 2, left };
+      }
+    }
+    return { action: "pick", player: (c.first + c.order.length) % 2, remaining };
+  }
+  const locked = lockedFor(c.picker, c.clause);
+  const open = c.pool.filter(id => !c.bans.includes(id));
+  const selectable = open.filter(id => !locked.has(id) && id !== RANDOM_ID);
+  if (c.bans.length < c.banCount && selectable.length > 1) {
+    return { action: "ban", player: c.banner, left: c.banCount - c.bans.length, locked, selectable };
+  }
+  return { action: "pick", player: c.picker, locked, selectable };
+}
+
+function randomFrom(list) { return list[Math.floor(Math.random() * list.length)]; }
+
+let lastTurnKey = "", tapLockUntil = 0;
+function tapStage(id) {
+  const c = set.cur; const t = turn();
+  // after the turn passes to the other player, ignore taps briefly so a double-tap can't act for them
+  if (Date.now() < tapLockUntil) return;
+  if (t.action === "strike") {
+    if (c.struck.some(s => s.id === id)) return;
+    (ui.fresh = id), commit(() => {
+      c.struck.push({ id, by: t.player });
+      const t2 = turn();
+      if (t2.action === "auto") finishPick(t2.remaining[0], false);
+    });
+  } else if (t.action === "pick" && c.type === "strike") {
+    if (!t.remaining.includes(id)) return;
+    (ui.fresh = id), commit(() => finishPick(id, false));
+  } else if (t.action === "ban") {
+    if (c.bans.includes(id)) return;
+    // never let a ban leave the counterpicker with nothing legal to pick
+    if (t.selectable.length <= 1 && t.selectable.includes(id)) { flash("That would leave nothing legal to pick."); return; }
+    (ui.fresh = id), commit(() => { c.bans.push(id); });
+  } else if (t.action === "pick") {
+    if (c.bans.includes(id) || t.locked.has(id)) return;
+    if (id === RANDOM_ID && !t.selectable.length) return;
+    (ui.fresh = id), commit(() => finishPick(id, false));
+  }
+}
+function finishPick(id, _) {
+  const c = set.cur;
+  if (id === RANDOM_ID) {
+    let options;
+    if (c.type === "cp") {
+      const locked = lockedFor(c.picker, c.clause);
+      options = c.pool.filter(x => x !== RANDOM_ID && !c.bans.includes(x) && !locked.has(x));
+    } else {
+      options = uniq(settings.starters.concat(settings.counterpicks)).filter(x => x !== RANDOM_ID);
+    }
+    c.random = true;
+    c.stage = randomFrom(options);
+  } else c.stage = id;
+}
+function reportWinner(p) {
+  commit(() => {
+    const c = set.cur;
+    set.games.push({ stage: c.stage, winner: p, random: c.random, type: c.type,
+      picker: c.type === "cp" ? c.picker : null });
+    set.score[p]++;
+    set.cur = null;
+    if (set.score[p] >= need()) { set.phase = "done"; set.champion = p; }
+    else startCounterpick();
+  });
+}
+function flash(msg) { ui.flash = msg; render(); setTimeout(() => { if (ui.flash === msg) { ui.flash = ""; render(); } }, 2200); }
+
+/* ---------- render ---------- */
+const ICON = {
+  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+  undo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg>',
+  reset: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>',
+  up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 15l6-6 6 6"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  swap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg>'
+};
+const app = document.getElementById("app");
+const navBtn = document.getElementById("navBtn");
+
+
+function render() {
+  navBtn.innerHTML = view === "set" ? ICON.gear : ICON.back + "<span>Done</span>";
+  navBtn.setAttribute("aria-label", view === "set" ? "Settings" : "Back");
+  let key = "";
+  try { if (set && set.phase === "game") { const t = turn(); key = t.action + ":" + t.player; } } catch (e) {}
+  const scene = view + "|" + (set ? [set.phase, set.games.length, set.flipWinner, set.cur && set.cur.stage ? "play" : ""].join("|") : "none");
+  const enter = scene !== lastScene;
+  const swap = !enter && key && key !== lastTurnKey;
+  lastScene = scene;
+  app.innerHTML = view === "settings" ? renderSettings() : renderSet();
+  app.classList.toggle("enter", enter);
+  if (enter) { app.classList.remove("enter"); void app.offsetWidth; app.classList.add("enter"); }
+  if (swap) { const tb = app.querySelector(".turn"); if (tb) tb.classList.add("swap"); }
+  if (lastTurnKey && key && key !== lastTurnKey) tapLockUntil = Date.now() + 500;
+  lastTurnKey = key;
+  ui.fresh = null;
+}
+let lastScene = "";
+
+function renderSet() {
+  if (!set) return renderSetup();
+  let h = scoreboardHTML();
+  if (ui.flash) h += `<div class="turn neutral"><div class="what">${esc(ui.flash)}</div></div>`;
+  if (set.phase === "decide") h += renderDecide();
+  else if (set.phase === "game") h += renderGame();
+  else if (set.phase === "done") h += renderDone();
+  h += historyHTML();
+  return h;
+}
+
+function renderSetup() {
+  const last = load("hdrStageStrike.names") || ["Player 1", "Player 2"];
+  return `
+  <div class="card stack">
+    <h2>new set</h2>
+    <label class="field"><span>Player 1</span><input type="text" id="n1" value="${esc(last[0])}" maxlength="24" autocomplete="off"></label>
+    <label class="field"><span>Player 2</span><input type="text" id="n2" value="${esc(last[1])}" maxlength="24" autocomplete="off"></label>
+    <div class="field"><span class="muted small">Format</span>
+      <div class="seg" style="margin-top:4px">
+        ${[3, 5].map(n => `<button data-action="setupBo" data-n="${n}" class="${(ui.setupBo || settings.bestOf) === n ? "on" : ""}">Best of ${n}</button>`).join("")}
+      </div>
+    </div>
+    <button class="btn primary" data-action="start">Settle it in Smash!</button>
+  </div>
+  <p class="muted small center">Ruleset: ${settings.starters.length} starters (${esc(settings.strikeOrder)}), ${settings.counterpicks.length} counterpicks, ${settings.bans} ban${settings.bans === 1 ? "" : "s"}, ${esc(CLAUSES[settings.clause].split(":")[0])}. Change it in settings.</p>`;
+}
+
+function scoreboardHTML() {
+  const gameNo = set.phase === "done" ? set.games.length : set.games.length + 1;
+  return `
+  <div class="card">
+    <div class="score">
+      <div class="pl a"><span class="nm">${esc(pname(0))}</span><span class="num">${set.score[0]}</span></div>
+      <div class="mid">Bo${set.bestOf}<br>${set.phase === "done" ? "Final" : "Game " + gameNo}</div>
+      <div class="pl b r"><span class="nm">${esc(pname(1))}</span><span class="num">${set.score[1]}</span></div>
+    </div>
+    <div class="tools">
+      <button class="iconbtn" data-action="undo" ${set.hist && set.hist.length ? "" : "disabled"}>${ICON.undo}<span>Undo</span></button>
+      <button class="iconbtn" data-action="reset">${ICON.reset}<span>Reset set</span></button>
+    </div>
+  </div>`;
+}
+
+function banner(player, pass, who, what) {
+  return `<div class="turn ${player === null ? "neutral" : "p" + (player + 1)}" role="status" aria-live="polite">
+    ${pass ? `<div class="pass">${esc(pass)}</div>` : ""}
+    <div class="who">${esc(who)}</div>${what ? `<div class="what">${esc(what)}</div>` : ""}</div>`;
+}
+
+function renderDecide() {
+  if (set.flipWinner === null) {
+    return banner(null, "Game 1", "Who strikes first?", "Flip a coin or play RPS.") + `
+    <div class="card stack">
+      <button class="btn primary" data-action="flip">Flip a coin</button>
+      <div class="muted small center">or tap who won RPS</div>
+      <div class="row">
+        <button class="btn p1" data-action="rps" data-p="0">${esc(pname(0))}</button>
+        <button class="btn p2" data-action="rps" data-p="1">${esc(pname(1))}</button>
+      </div>
+    </div>`;
+  }
+  const w = set.flipWinner;
+  return banner(w, "Pass to " + pname(w), pname(w) + (set.flipBy === "coin" ? " won the flip" : " won RPS"), "") + `
+  <div class="card stack">
+    <div class="row">
+      <button class="btn ${"p" + (w + 1)}" data-action="first" data-p="${w}">Strike first</button>
+      <button class="btn" data-action="first" data-p="${other(w)}">Strike second</button>
+    </div>
+  </div>`;
+}
+
+function renderGame() {
+  const c = set.cur; const t = turn();
+  let h = "";
+  if (t.action === "play") {
+    const s = stageInfo(c.stage);
+    h += banner(null, "Game " + (set.games.length + 1), "Play on " + s.name, c.random ? "Rolled by Random." : "");
+    h += `<div class="card pickhero">
+      <div class="herowrap">${thumbHTML(c.stage, "img")}<div class="slashes" aria-hidden="true"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i></div></div>
+      <div><div class="title">${esc(s.name)}</div>
+      <div class="sub">${c.type === "strike" ? "Starter" : esc(pname(c.picker)) + "'s pick"}${c.random ? " (random)" : ""}</div></div>
+      <div class="muted small">Who won?</div>
+      <div class="row">
+        <button class="btn p1" data-action="win" data-p="0">${esc(pname(0))}</button>
+        <button class="btn p2" data-action="win" data-p="1">${esc(pname(1))}</button>
+      </div>
+    </div>`;
+    h += stagesHTML(t, true);
+    return h;
+  }
+  const p = t.player;
+  if (t.action === "strike") {
+    h += banner(p, "Pass to " + pname(p), pname(p) + " strikes " + t.left, "");
+  } else if (t.action === "pick" && c.type === "strike") {
+    h += banner(p, "Pass to " + pname(p), pname(p) + " picks", "");
+  } else if (t.action === "ban") {
+    h += banner(p, "Game " + (set.games.length + 1) + " · pass to " + pname(p), pname(p) + " bans " + t.left, "");
+  } else {
+    h += banner(p, "Pass to " + pname(p), pname(p) + " picks", "");
+  }
+  h += stagesHTML(t, false);
+  return h;
+}
+
+function stagesHTML(t, readOnly) {
+  const c = set.cur;
+  const cards = c.pool.map((id, idx) => {
+    const s = stageInfo(id);
+    let cls = "stage", tag = "", x = "", disabled = readOnly, tagCls = "";
+    if (c.type === "strike") {
+      const st = c.struck.find(z => z.id === id);
+      if (c.stage === id) { cls += " picked"; tag = ""; tagCls = "pk"; x = "Picked"; disabled = true; }
+      else if (st) { cls += " struck"; tag = pname(st.by); tagCls = "p" + (st.by + 1); x = "Struck"; disabled = true; }
+      else if (c.stage) { tag = ""; disabled = true; }
+      else tag = t.action === "strike" ? "strike" : "pick";
+    } else {
+      const locked = lockedFor(c.picker, c.clause);
+      if (c.stage === id || (c.random && id === RANDOM_ID)) { cls += " picked"; tag = id === RANDOM_ID ? "" : (c.random ? "random" : ""); tagCls = "pk"; x = id === RANDOM_ID ? "Picked" : (c.random ? "Rolled" : "Picked"); disabled = true; }
+      else if (c.bans.includes(id)) { cls += " banned"; tag = pname(c.banner); tagCls = "p" + (c.banner + 1); x = "Banned"; disabled = true; }
+      else if (c.stage) { disabled = true; if (locked.has(id)) tag = c.clause === "norepeat" ? "Already played" : "DSR"; }
+      else if (t.action === "ban") { tag = locked.has(id) ? "ban · " + clauseShort(c.clause) : "ban"; }
+      else if (locked.has(id)) { cls += " locked"; tag = ""; tagCls = "lk"; x = clauseShort(c.clause); disabled = true; }
+      else if (id === RANDOM_ID && !t.selectable.length) { cls += " locked"; tag = ""; disabled = true; }
+      else tag = "pick";
+    }
+    if (!disabled) cls += " tappable t-p" + (t.player + 1);
+    if (ui.fresh === id) cls += " fresh";
+    return `<button class="${cls}" style="--i:${idx}" data-action="tap" data-id="${esc(id)}" ${disabled ? "disabled" : ""}>
+      <span class="tw">${thumbHTML(id, "thumb")}${x ? `<span class="x ${tagCls}" aria-hidden="true">${x}</span>` : ""}</span>
+      <span class="info"><span class="name">${esc(s.name)}</span>${tag ? `<span class="tag ${tagCls}">${esc(tag)}</span>` : ""}</span>
+    </button>`;
+  }).join("");
+  const label = c.type === "strike" ? "Starters" : "Bans & counterpicks";
+  return `<section class="stagecard"><h2 class="poster">${label}</h2><div class="stages">${cards}</div></section>`;
+}
+function clauseShort(cl) { return cl === "norepeat" ? "No repeats" : cl === "mdsr" ? "MDSR" : "DSR"; }
+
+function renderDone() {
+  const p = set.champion;
+  return banner(p, "Set over", pname(p) + " wins the set " + set.score[p] + "–" + set.score[other(p)], "") + `
+  <div class="card stack">
+    <button class="btn primary" data-action="rematch">Run it back</button>
+    <button class="btn" data-action="newset">New set</button>
+  </div>`;
+}
+
+function historyHTML() {
+  if (!set.games.length) return "";
+  return `<div class="card"><h2>Games</h2><ol class="hist">${set.games.map((g, i) => `
+    <li><span class="g">G${i + 1}</span><span class="s">${esc(stageInfo(g.stage).name)}${g.random ? " <span class='muted small'>(random)</span>" : ""}<br><span class="muted small">${g.type === "strike" ? "Starter" : "Picked by " + esc(pname(g.picker))}</span></span>
+    <span class="w p${g.winner + 1}">${esc(pname(g.winner))}</span></li>`).join("")}</ol></div>`;
+}
+
+/* ---------- settings ---------- */
+function renderSettings() {
+  const order = parseOrder(settings.strikeOrder);
+  const strikes = order ? order.reduce((a, b) => a + b, 0) : 0;
+  let orderMsg = "";
+  if (!order) orderMsg = `<div class="err">Use numbers separated by dashes, like 1-2-1.</div>`;
+  else if (strikes > settings.starters.length - 1) orderMsg = `<div class="err">${strikes} strikes but only ${settings.starters.length} starters. Striking stops when one stage is left.</div>`;
+  else if (strikes < settings.starters.length - 1) orderMsg = `<div class="muted small">${settings.starters.length - strikes} stages will be left; the next player then picks one.</div>`;
+  else orderMsg = `<div class="muted small">Strikes down to 1 stage. Turns alternate between players.</div>`;
+  const pool = uniq(settings.starters.concat(settings.counterpicks)).length;
+  return `
+  <div class="card">
+    <h2>Starters (game 1)</h2>
+    ${listHTML("starters")}
+    ${addHTML("starters")}
+  </div>
+  <div class="card">
+    <h2>Counterpicks</h2>
+    ${listHTML("counterpicks")}
+    ${addHTML("counterpicks")}
+    <p class="muted small" style="margin:10px 0 0">From game 2, the winner bans from starters and counterpicks together. “Random” rolls a legal stage that isn't banned.</p>
+  </div>
+  <div class="card">
+    <h2>Rules</h2>
+    <label class="field"><span>Strike order for game 1</span>
+      <input type="text" id="strikeOrder" value="${esc(settings.strikeOrder)}" inputmode="numeric" autocomplete="off"></label>
+    ${orderMsg}
+    <div class="field"><span class="muted small">Bans by the winner (game 2+)</span>
+      <div class="stepper" style="margin-top:4px">
+        <button class="iconbtn" data-action="bans" data-d="-1" aria-label="Fewer bans">−</button>
+        <span class="val">${settings.bans}</span>
+        <button class="iconbtn" data-action="bans" data-d="1" aria-label="More bans" ${settings.bans >= pool - 1 ? "disabled" : ""}>+</button>
+      </div>
+    </div>
+    <label class="field"><span>Stage clause</span>
+      <select id="clause">${Object.entries(CLAUSES).map(([k, v]) => `<option value="${k}" ${settings.clause === k ? "selected" : ""}>${esc(v)}</option>`).join("")}</select></label>
+    <div class="field"><span class="muted small">Default format</span>
+      <div class="seg" style="margin-top:4px">${[3, 5].map(n => `<button data-action="defBo" data-n="${n}" class="${settings.bestOf === n ? "on" : ""}">Best of ${n}</button>`).join("")}</div>
+    </div>
+    ${set ? `<p class="muted small" style="margin:6px 0 0">Changes apply from the next game of the set in progress.</p>` : ""}
+  </div>
+  <div class="card">
+    <h2>look</h2>
+    <div class="skins">${Object.entries(SKINS).map(([k, v]) => `<button class="skin ${skin === k ? "on" : ""}" data-action="skin" data-k="${k}" style="background:${v.bg};color:${v.fg}" aria-pressed="${skin === k}">${v.name}<span class="dots">${v.dots.map(c => `<b style="background:${c}"></b>`).join("")}</span></button>`).join("")}</div>
+  </div>
+  <div class="card stack">
+    <h2>stage list presets</h2>
+    <button class="btn primary" data-action="preset" data-k="ff2026">Flashbacks &amp; Friendlies 2026</button>
+    <p class="muted small" style="margin:0">Starters: Hollow Bastion, Garreg Mach Monastery, Battlefield, Smashville, Frigate Husk. Counterpicks: Fountain of Dreams, Realm of Gamecube, Bramble Blast, Sky Sanctuary Zone.</p>
+    <button class="btn" data-action="preset" data-k="hdr">HDR official tourney list</button>
+    <p class="muted small" style="margin:0">Same starters. Counterpicks: Northern Cave, Realm of Gamecube, Random, Bramble Blast, Sky Sanctuary Zone.</p>
+    <p class="muted small" style="margin:0">A preset replaces the stage lists and keeps your bans, strike order and clause. Gentlemen's agreement is always allowed: just pick the stage together in game.</p>
+  </div>
+  <p class="foot">everyone is here · no johns<br>Stage names and pictures are from HewDraw Remix's stage select. Saved on this device only.</p>`;
+}
+function listHTML(key) {
+  const list = settings[key];
+  if (!list.length) return `<p class="muted small">No stages yet.</p>`;
+  return `<ul class="slist">${list.map((id, i) => `<li>${thumbHTML(id, "mini")}<span class="n">${esc(stageInfo(id).name)}</span>
+    <button class="iconbtn" data-action="moveup" data-k="${key}" data-i="${i}" aria-label="Move up" ${i === 0 ? "disabled" : ""}>${ICON.up}</button>
+    <button class="iconbtn" data-action="swaplist" data-k="${key}" data-i="${i}" aria-label="Move to ${key === "starters" ? "counterpicks" : "starters"}">${ICON.swap}</button>
+    <button class="iconbtn" data-action="remove" data-k="${key}" data-i="${i}" aria-label="Remove">${ICON.x}</button></li>`).join("")}</ul>`;
+}
+function addHTML(key) {
+  const used = new Set(settings.starters.concat(settings.counterpicks));
+  const opts = CATALOGUE.filter(([id]) => !used.has(id)).sort((a, b) => a[1].localeCompare(b[1]));
+  return `<div class="addrow">
+    <select id="add-${key}" aria-label="Add a stage"><option value="">Add a stage…</option>${opts.map(([id, n]) => `<option value="${id}">${esc(n)}</option>`).join("")}<option value="__custom">Other (type a name)…</option></select>
+    <button class="iconbtn" data-action="add" data-k="${key}">Add</button>
+  </div>
+  ${ui.addTarget === key ? `<div class="addrow" style="margin-top:8px"><input type="text" id="custom-${key}" placeholder="Stage name" maxlength="40" autocomplete="off"><button class="iconbtn" data-action="addCustom" data-k="${key}">Add</button></div>` : ""}`;
+}
+function saveSettings() { save(KEY_SETTINGS, settings); }
+
+/* ---------- events ---------- */
+document.addEventListener("click", (e) => {
+  const el = e.target.closest("[data-action]");
+  if (!el || el.disabled) return;
+  const a = el.dataset.action;
+  const P = el.dataset.p !== undefined ? Number(el.dataset.p) : null;
+  switch (a) {
+    case "nav": view = view === "set" ? "settings" : "set"; ui.addTarget = null; render(); window.scrollTo(0, 0); break;
+    case "setupBo": ui.setupBo = Number(el.dataset.n); keepNames(); render(); break;
+    case "start": {
+      const n1 = (document.getElementById("n1").value.trim() || "Player 1").slice(0, 24);
+      let n2 = (document.getElementById("n2").value.trim() || "Player 2").slice(0, 24);
+      if (n2 === n1) n2 += " (2)";
+      save("hdrStageStrike.names", [n1, n2]);
+      newSet([n1, n2], ui.setupBo || settings.bestOf);
+      break;
+    }
+    case "flip": commit(() => { set.flipWinner = Math.random() < .5 ? 0 : 1; set.flipBy = "coin"; }); break;
+    case "rps": commit(() => { set.flipWinner = P; set.flipBy = "rps"; }); break;
+    case "first": commit(() => { set.firstStriker = P; startGame1(P); }); break;
+    case "tap": tapStage(el.dataset.id); break;
+    case "win": reportWinner(P); break;
+    case "undo": undo(); break;
+    case "reset":
+      if (armed(el, "Tap again to reset")) { set = null; save(KEY_SET, null); render(); }
+      break;
+    case "rematch": newSet(set.names.slice(), set.bestOf); break;
+    case "skin": skin = SKINS[el.dataset.k] ? el.dataset.k : "banner"; save(KEY_SKIN, skin); applySkin(); render(); break;
+    case "newset": set = null; save(KEY_SET, null); render(); break;
+    /* settings */
+    case "bans": settings.bans = Math.max(0, settings.bans + Number(el.dataset.d)); saveSettings(); render(); break;
+    case "defBo": settings.bestOf = Number(el.dataset.n); saveSettings(); render(); break;
+    case "remove": settings[el.dataset.k].splice(Number(el.dataset.i), 1); clampBans(); saveSettings(); render(); break;
+    case "moveup": { const l = settings[el.dataset.k], i = Number(el.dataset.i); [l[i - 1], l[i]] = [l[i], l[i - 1]]; saveSettings(); render(); break; }
+    case "swaplist": {
+      const k = el.dataset.k, o = k === "starters" ? "counterpicks" : "starters";
+      const [id] = settings[k].splice(Number(el.dataset.i), 1); settings[o].push(id); saveSettings(); render(); break;
+    }
+    case "add": {
+      const k = el.dataset.k, v = document.getElementById("add-" + k).value;
+      if (v === "__custom") { ui.addTarget = k; render(); const inp = document.getElementById("custom-" + k); if (inp) inp.focus(); }
+      else if (v) { settings[k].push(v); saveSettings(); render(); }
+      break;
+    }
+    case "addCustom": {
+      const k = el.dataset.k, name = document.getElementById("custom-" + k).value.trim().slice(0, 40);
+      if (!name) return;
+      const id = "custom_" + Date.now().toString(36);
+      settings.custom[id] = { name };
+      if (set) { set.custom = set.custom || {}; set.custom[id] = { name }; persist(); }
+      settings[k].push(id); ui.addTarget = null; saveSettings(); render(); break;
+    }
+    case "preset": {
+      const pr = PRESETS[el.dataset.k];
+      if (pr && armed(el, "Tap again to use this list")) {
+        settings.starters = pr.starters.slice(); settings.counterpicks = pr.counterpicks.slice();
+        clampBans(); saveSettings(); render();
+      }
+      break;
+    }
+  }
+});
+document.addEventListener("change", (e) => {
+  if (e.target.id === "strikeOrder") { settings.strikeOrder = e.target.value.trim(); saveSettings(); render(); }
+  else if (e.target.id === "clause") { settings.clause = e.target.value; saveSettings(); render(); }
+});
+/* two-tap confirm: the first tap arms the button for 3 seconds, the second does it */
+function armed(el, msg) {
+  if (el.dataset.armed === "1") return true;
+  const label = el.innerHTML;
+  el.dataset.armed = "1"; el.classList.add("armed");
+  const span = el.querySelector("span");
+  if (span) span.textContent = msg; else el.textContent = msg;
+  setTimeout(() => { if (el.isConnected) { el.dataset.armed = ""; el.classList.remove("armed"); el.innerHTML = label; } }, 3000);
+  return false;
+}
+function keepNames() {
+  const a = document.getElementById("n1"), b = document.getElementById("n2");
+  if (a && b) save("hdrStageStrike.names", [a.value, b.value]);
+}
+function clampBans() {
+  const pool = uniq(settings.starters.concat(settings.counterpicks)).length;
+  settings.bans = Math.max(0, Math.min(settings.bans, Math.max(0, pool - 1)));
+}
+
+/* guard against a corrupted saved set */
+try { if (set && (!Array.isArray(set.names) || !Array.isArray(set.games))) set = null; } catch (e) { set = null; }
+render();
+})();
+</script>
+</body>
+</html>
