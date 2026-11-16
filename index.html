@@ -300,6 +300,32 @@ p.muted.center, body > .wrap > main > p { color: var(--on-bg-dim); }
 .skin { position: relative; }
 .foot { color: var(--on-bg-dim); font-size: 12px; text-align: center; margin-top: 26px; }
 
+/* ruleset sheet */
+.rulesbtn { margin-top: 4px; background: transparent; color: var(--on-bg); border-color: var(--on-bg); box-shadow: 3px 3px 0 var(--sh); }
+.sheet { position: fixed; inset: 0; z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet-back { position: absolute; inset: 0; background: color-mix(in srgb, var(--sh) 55%, transparent); animation: fadeIn .25s ease both; }
+.sheet-card {
+  position: relative; width: 100%; max-width: 560px; max-height: 92vh; max-height: 92dvh; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--bg); border: 2px solid var(--sh); border-bottom: 0; border-radius: 24px 24px 0 0;
+  padding: 14px max(16px, env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  animation: sheetUp .45s var(--ease) both;
+}
+.sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; position: sticky; top: -14px; padding-block: 4px; background: var(--bg); z-index: 1; }
+.sheet-head h2.poster { margin: 0; text-align: left; }
+.sheet-sub { margin: 6px 0 0; color: var(--on-bg-dim); font-size: 14px; }
+.rules-list { margin: 0; padding-left: 20px; color: var(--ink); }
+.rules-list li + li { margin-top: 6px; }
+.rules-grid { margin: 0; }
+.rules-grid > div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 8px 0; border-top: 2px dashed color-mix(in srgb, var(--sh) 20%, transparent); }
+.rules-grid > div:first-child { border-top: 0; padding-top: 0; }
+.rules-grid dt { color: var(--ink-2); font-weight: 800; min-width: 0; }
+.rules-grid dd { margin: 0; color: var(--ink); font: 900 16px/1.2 "Fraunces", serif; font-variation-settings: "SOFT" 100; text-align: right; white-space: nowrap; }
+.rules-grid .hot dd b { display: inline-block; margin-left: 4px; padding: 2px 7px; border-radius: 7px; background: var(--orange); color: var(--on-accent); font: 900 11px/1.2 "Nunito", sans-serif; text-transform: uppercase; letter-spacing: .05em; transform: rotate(-3deg); }
+body.sheet-open { overflow: hidden; }
+@keyframes sheetUp { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sheet-card, .sheet-back { animation: none; } }
+
 /* ---------- motion ---------- */
 :root { --ease: cubic-bezier(.2, .8, .2, 1); --slash: -14deg; }
 header.top h1 .logo { animation: logoIn .8s var(--ease) both; }
@@ -407,6 +433,55 @@ img { max-width: 100%; }
     <button class="iconbtn" id="navBtn" data-action="nav" aria-label="Settings"></button>
   </header>
   <main id="app"></main>
+</div>
+
+<div class="sheet" id="rulesSheet" hidden>
+  <div class="sheet-back" data-action="rulesClose"></div>
+  <section class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+    <div class="sheet-head">
+      <h2 id="rulesTitle" class="poster">Ruleset</h2>
+      <button class="iconbtn" data-action="rulesClose" aria-label="Close">✕</button>
+    </div>
+    <p class="sheet-sub">HDR Singles · every match is played on HewDraw Remix</p>
+    <div class="card">
+      <h2>the set</h2>
+      <ul class="rules-list">
+        <li>1-2-1 stage bans to start the set. Higher seed bans first.</li>
+        <li>After each game the winner bans two stages.</li>
+        <li>Dave's Stupid Rule is on.</li>
+        <li>You can always gentleman's to any stage you both agree on.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>game settings</h2>
+      <dl class="rules-grid">
+      <div><dt>Stocks</dt><dd>4</dd></div>
+      <div><dt>Time limit</dt><dd>8:00</dd></div>
+      <div><dt>Final Smash meter</dt><dd>Off</dd></div>
+      <div><dt>Spirits</dt><dd>Off</dd></div>
+      <div><dt>Damage handicap</dt><dd>Off</dd></div>
+      <div><dt>Stage selection</dt><dd>Anyone</dd></div>
+      <div><dt>Items</dt><dd>Off and none</dd></div>
+      <div><dt>Stage morph</dt><dd>Off</dd></div>
+      <div class="hot"><dt>Stage hazards</dt><dd>On <b>important</b></dd></div>
+      <div><dt>Team attack</dt><dd>On</dd></div>
+      <div><dt>Launch rate</dt><dd>1.0x</dd></div>
+      <div><dt>Underdog boost</dt><dd>Off</dd></div>
+      <div><dt>Pausing</dt><dd>Off</dd></div>
+      <div><dt>Score display</dt><dd>Off</dd></div>
+      <div><dt>% show damage</dt><dd>Yes</dd></div>
+      <div><dt>Custom balance</dt><dd>Off</dd></div>
+      <div><dt>Echo fighters</dt><dd>Separate</dd></div>
+      <div><dt>Radar</dt><dd>Big</dd></div>
+      <div><dt>Teammate highlight</dt><dd>On</dd></div>
+      <div><dt>Mii fighters</dt><dd>None</dd></div>
+      </dl>
+    </div>
+    <div class="card">
+      <h2>bring your own controller</h2>
+      <p class="small" style="margin:0">Nearly every controller from GameCube to PlayStation 5 works. A few backups are on hand, but we can't promise their quality. Please be respectful of the venue.</p>
+    </div>
+  </section>
 </div>
 
 <script>
@@ -733,7 +808,7 @@ function renderSetup() {
     </div>
     <button class="btn primary" data-action="start">Settle it in Smash!</button>
   </div>
-  <p class="muted small center">Ruleset: ${settings.starters.length} starters (${esc(settings.strikeOrder)}), ${settings.counterpicks.length} counterpicks, ${settings.bans} ban${settings.bans === 1 ? "" : "s"}, ${esc(CLAUSES[settings.clause].split(":")[0])}. Change it in settings.</p>`;
+  <button class="btn rulesbtn" data-action="rules" aria-haspopup="dialog">Ruleset</button>`;
 }
 
 function scoreboardHTML() {
@@ -937,12 +1012,30 @@ function addHTML(key) {
 function saveSettings() { save(KEY_SETTINGS, settings); }
 
 /* ---------- events ---------- */
+let rulesOpener = null;
+function openRules(opener) {
+  const sh = document.getElementById("rulesSheet");
+  rulesOpener = opener || null;
+  sh.hidden = false; document.body.classList.add("sheet-open");
+  sh.querySelector(".sheet-card").scrollTop = 0;
+  sh.querySelector('[aria-label="Close"]').focus({ preventScroll: true });
+}
+function closeRules() {
+  const sh = document.getElementById("rulesSheet");
+  if (sh.hidden) return;
+  sh.hidden = true; document.body.classList.remove("sheet-open");
+  if (rulesOpener && document.body.contains(rulesOpener)) rulesOpener.focus({ preventScroll: true });
+}
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeRules(); });
+
 document.addEventListener("click", (e) => {
   const el = e.target.closest("[data-action]");
   if (!el || el.disabled) return;
   const a = el.dataset.action;
   const P = el.dataset.p !== undefined ? Number(el.dataset.p) : null;
   switch (a) {
+    case "rules": openRules(el); break;
+    case "rulesClose": closeRules(); break;
     case "nav": view = view === "set" ? "settings" : "set"; ui.addTarget = null; render(); window.scrollTo(0, 0); break;
     case "setupBo": ui.setupBo = Number(el.dataset.n); keepNames(); render(); break;
     case "start": {
