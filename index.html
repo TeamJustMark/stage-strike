@@ -1001,7 +1001,7 @@ function scoreboardHTML() {
     </div>
     <div class="tools">
       <button class="iconbtn" data-action="undo" ${set.hist && set.hist.length ? "" : "disabled"}>${ICON.undo}<span>Undo</span></button>
-      <button class="iconbtn" data-action="reset">${ICON.reset}<span>Reset set</span></button>
+      <button class="iconbtn" data-action="reset">${ICON.reset}<span>New set</span></button>
     </div>
   </div>`;
 }
@@ -1229,7 +1229,7 @@ document.addEventListener("click", (e) => {
     case "win": reportWinner(P); break;
     case "undo": undo(); break;
     case "reset":
-      if (armed(el, "Tap again to reset")) { set = null; save(KEY_SET, null); render(); }
+      if (armed(el, "Tap again for a new set")) { set = null; save(KEY_SET, null); render(); }
       break;
     case "rematch": newSet(set.names.slice(), set.bestOf); break;
     case "skin": skin = SKINS[el.dataset.k] ? el.dataset.k : "banner"; save(KEY_SKIN, skin); applySkin(); render(); break;
