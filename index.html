@@ -279,6 +279,8 @@ p.muted.center, body > .wrap > main > p { color: var(--on-bg-dim); }
 .stack > * + * { margin-top: 12px; }
 
 /* settings */
+.userlist { display: flex; gap: 8px; align-items: center; }
+.userlist .btn { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .slist { list-style: none; padding: 0; margin: 0 0 12px; }
 .slist li { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-top: 2px dashed color-mix(in srgb, var(--sh) 20%, transparent); }
 .slist li:first-child { border-top: 0; }
@@ -706,17 +708,11 @@ const CATALOGUE = [
 const CAT = new Map(CATALOGUE.map(([id, name]) => [id, { id, name, img: "stages/" + id + ".jpg" }]));
 const RANDOM_ID = "randomnormal";
 
-/* HDR official tourney mode list (hdr-stages/tourney_mode_official.json) */
 const PRESETS = {
   ff2026: {
     label: "Flashbacks & Friendlies 2026",
     starters: ["trail_castle", "fe_shrine", "battlefield", "animal_village", "metroid_orpheon"],
     counterpicks: ["kirby_fountain", "wreckingcrew", "dk_jungle", "sonic_greenhill"]
-  },
-  hdr: {
-    label: "HDR official tourney list",
-    starters: ["trail_castle", "fe_shrine", "battlefield", "animal_village", "metroid_orpheon"],
-    counterpicks: ["ff_cave", "wreckingcrew", RANDOM_ID, "dk_jungle", "sonic_greenhill"]
   }
 };
 const DEFAULTS = {
@@ -726,7 +722,8 @@ const DEFAULTS = {
   strikeOrder: "1-2-1",
   clause: "dsr",
   bestOf: 3,
-  custom: {}
+  custom: {},
+  lists: []
 };
 const CLAUSES = {
   off: "Off",
@@ -768,7 +765,8 @@ function applySkin() {
 }
 applySkin();
 let view = "set";
-let ui = { addTarget: null, flash: "" };
+let ui = { addTarget: null, addList: false, flash: "" };
+if (!Array.isArray(settings.lists)) settings.lists = [];
 
 function stageInfo(id) {
   if (CAT.has(id)) return CAT.get(id);
@@ -1164,12 +1162,10 @@ function renderSettings() {
     <div class="skins">${Object.entries(SKINS).map(([k, v]) => `<button class="skin ${skin === k ? "on" : ""}" data-action="skin" data-k="${k}" style="background:${v.bg};color:${v.fg}" aria-pressed="${skin === k}">${v.name}<span class="dots">${v.dots.map(c => `<b style="background:${c}"></b>`).join("")}</span></button>`).join("")}</div>
   </div>
   <div class="card stack">
-    <h2>stage list presets</h2>
+    <h2>stage lists</h2>
     <button class="btn primary" data-action="preset" data-k="ff2026">Flashbacks &amp; Friendlies 2026</button>
-    <p class="muted small" style="margin:0">Starters: Hollow Bastion, Garreg Mach Monastery, Battlefield, Smashville, Frigate Husk. Counterpicks: Fountain of Dreams, Realm of Gamecube, Bramble Blast, Sky Sanctuary Zone.</p>
-    <button class="btn" data-action="preset" data-k="hdr">HDR official tourney list</button>
-    <p class="muted small" style="margin:0">Same starters. Counterpicks: Northern Cave, Realm of Gamecube, Random, Bramble Blast, Sky Sanctuary Zone.</p>
-    <p class="muted small" style="margin:0">A preset replaces the stage lists and keeps your strike counts, strike order and clause. Gentlemen's agreement is always allowed: just pick the stage together in game.</p>
+    ${settings.lists.map((l, i) => `<div class="userlist"><button class="btn" data-action="preset" data-k="u${i}">${esc(l.name)}</button><button class="iconbtn" data-action="dellist" data-i="${i}" aria-label="Delete ${esc(l.name)}">${ICON.x}</button></div>`).join("")}
+    ${ui.addList ? `<div class="addrow"><input type="text" id="listName" placeholder="Name this list" maxlength="40" autocomplete="off"><button class="iconbtn" data-action="saveList">Save</button></div>` : `<button class="btn" data-action="addList">Add a stage list</button>`}
   </div>
   <p class="foot">everyone is here · no johns<br>Stage names and pictures are from HewDraw Remix's stage select. Saved on this device only.</p>`;
 }
@@ -1217,7 +1213,7 @@ document.addEventListener("click", (e) => {
   switch (a) {
     case "rules": openRules(el); break;
     case "rulesClose": closeRules(); break;
-    case "nav": view = view === "set" ? "settings" : "set"; ui.addTarget = null; render(); window.scrollTo(0, 0); break;
+    case "nav": view = view === "set" ? "settings" : "set"; ui.addTarget = null; ui.addList = false; render(); window.scrollTo(0, 0); break;
     case "setupBo": ui.setupBo = Number(el.dataset.n); keepNames(); render(); break;
     case "start": {
       const n1 = (document.getElementById("n1").value.trim() || "Player 1").slice(0, 24);
@@ -1262,8 +1258,28 @@ document.addEventListener("click", (e) => {
       if (set) { set.custom = set.custom || {}; set.custom[id] = { name }; persist(); }
       settings[k].push(id); ui.addTarget = null; saveSettings(); render(); break;
     }
+    case "addList": {
+      ui.addList = true; render();
+      const inp = document.getElementById("listName"); if (inp) inp.focus();
+      break;
+    }
+    case "saveList": {
+      const name = document.getElementById("listName").value.trim().slice(0, 40);
+      if (!name) return;
+      const custom = {};
+      settings.starters.concat(settings.counterpicks).forEach(id => { if (settings.custom[id]) custom[id] = settings.custom[id]; });
+      settings.lists.push({ name, starters: settings.starters.slice(), counterpicks: settings.counterpicks.slice(), custom });
+      ui.addList = false; saveSettings(); render(); break;
+    }
+    case "dellist": {
+      const i = Number(el.dataset.i);
+      if (settings.lists[i] && armed(el, "Delete?")) { settings.lists.splice(i, 1); saveSettings(); render(); }
+      break;
+    }
     case "preset": {
-      const pr = PRESETS[el.dataset.k];
+      const k = el.dataset.k;
+      const pr = k[0] === "u" ? settings.lists[Number(k.slice(1))] : PRESETS[k];
+      if (pr && pr.custom) Object.assign(settings.custom, pr.custom);
       if (pr && armed(el, "Tap again to use this list")) {
         settings.starters = pr.starters.slice(); settings.counterpicks = pr.counterpicks.slice();
         clampBans(); saveSettings(); render();
@@ -1271,6 +1287,9 @@ document.addEventListener("click", (e) => {
       break;
     }
   }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && e.target.id === "listName") { e.preventDefault(); const b = document.querySelector('[data-action="saveList"]'); if (b) b.click(); }
 });
 document.addEventListener("change", (e) => {
   if (e.target.id === "strikeOrder") { settings.strikeOrder = e.target.value.trim(); saveSettings(); render(); }
