@@ -35,37 +35,38 @@
   --logo: #fde9d3;
   --logo-shade: #f08a2b;
   --accent-ts: var(--sh);
+  --btn-ink: #3a2f75;
   color-scheme: light;
 }
 :root[data-skin="tennis"] {
-  --bg: #007c3e; --bg-2: #006a35; --deep: #0b4d2b;
-  --cream: #ece7da; --panel: #ece7da; --panel-2: #ddd8c2;
-  --orange: #dfe3a3; --orange-ink: #4f7d1c; --on-accent: #0b4d2b;
-  --ink: #0b4d2b; --ink-2: #1d5c39; --muted: #6a8a72;
-  --on-bg: #ece7da; --on-bg-dim: #c9e2c4;
-  --p1: #dfe3a3; --p1-ink: #4f7d1c; --p2: #0b4d2b; --p2-ink: #007c3e;
-  --pick: #dfe3a3; --lock: #3f6f8f; --sh: #06381f;
-  --logo: #dfe3a3; --logo-shade: transparent; --accent-ts: transparent;
+  --bg: #007c3e; --bg-2: #00703a; --deep: #005a2e;
+  --cream: #ece7da; --panel: #006b35; --panel-2: #005e2f;
+  --orange: #dfe3a3; --orange-ink: #dfe3a3; --on-accent: #00512a;
+  --ink: #ece7da; --ink-2: #dfe6d3; --muted: #a3ccab;
+  --on-bg: #ece7da; --on-bg-dim: #b8dcbd;
+  --p1: #dfe3a3; --p1-ink: #dfe3a3; --p2: #005a2e; --p2-ink: #ece7da;
+  --pick: #dfe3a3; --lock: #9fb8d6; --sh: #004722;
+  --logo: #dfe3a3; --logo-shade: transparent; --accent-ts: transparent; --btn-ink: #00512a;
 }
 :root[data-skin="grilled"] {
-  --bg: #f5391c; --bg-2: #e02f14; --deep: #6b1a10;
-  --cream: #ece6d8; --panel: #ece6d8; --panel-2: #e3d6c3;
-  --orange: #ffb52e; --orange-ink: #c42a12; --on-accent: #5a140b;
-  --ink: #5a140b; --ink-2: #74281c; --muted: #a8665a;
-  --on-bg: #ece6d8; --on-bg-dim: #ffd6c9;
-  --p1: #ffb52e; --p1-ink: #c42a12; --p2: #6b1a10; --p2-ink: #6b1a10;
-  --pick: #ffb52e; --lock: #8a3a7a; --sh: #4a1009;
-  --logo: #ece6d8; --logo-shade: transparent; --accent-ts: transparent;
+  --bg: #f5391c; --bg-2: #dd2f12; --deep: #6b1a10;
+  --cream: #ece6d8; --panel: #ece6d8; --panel-2: #e2d5c2;
+  --orange: #e8331a; --orange-ink: #d22e12; --on-accent: #ece6d8;
+  --ink: #6b1a10; --ink-2: #7f2a1d; --muted: #a8665a;
+  --on-bg: #ece6d8; --on-bg-dim: #ffd3c6;
+  --p1: #e8331a; --p1-ink: #d22e12; --p2: #6b1a10; --p2-ink: #6b1a10;
+  --pick: #ece6d8; --lock: #8a3a7a; --sh: #6b1a10;
+  --logo: #ece6d8; --logo-shade: transparent; --accent-ts: transparent; --btn-ink: #6b1a10;
 }
 :root[data-skin="cannery"] {
   --bg: #ddd5c6; --bg-2: #cfc6b4; --deep: #3d8fca;
-  --cream: #f7f2e8; --panel: #f7f2e8; --panel-2: #ebe4d5;
-  --orange: #e8361a; --orange-ink: #cf2b12; --on-accent: #f7f2e8;
+  --cream: #f7f2e8; --panel: #e6dfd1; --panel-2: #efe9dd;
+  --orange: #e8361a; --orange-ink: #d22c12; --on-accent: #f7f2e8;
   --ink: #1d5a88; --ink-2: #2b6c9c; --muted: #6f93b0;
   --on-bg: #1d5a88; --on-bg-dim: #5d84a3;
-  --p1: #e8361a; --p1-ink: #cf2b12; --p2: #3d8fca; --p2-ink: #2b78b3;
-  --pick: #3d8fca; --lock: #7a5aa8; --sh: #1b4b73;
-  --logo: #5ea6d6; --logo-shade: transparent;
+  --p1: #e8361a; --p1-ink: #d22c12; --p2: #3d8fca; --p2-ink: #2b78b3;
+  --pick: #3d8fca; --lock: #7a5aa8; --sh: #3d8fca;
+  --logo: #5ea6d6; --logo-shade: transparent; --accent-ts: transparent; --btn-ink: #1d5a88;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -102,6 +103,8 @@ header.top h1 { flex: 1; min-width: 0; margin: 0; position: relative; display: f
 header.top h1 .logo { display: block; position: relative; flex: 0 1 auto; width: min(140px, 40vw); min-width: 0; aspect-ratio: 520 / 162; }
 header.top h1 .logo i { position: absolute; inset: 0; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
 header.top h1 .logo .lsh { background: var(--logo-shade); -webkit-mask-image: url(ff-logo-shade.png); mask-image: url(ff-logo-shade.png); }
+header.top h1 .logo .lorig { position: absolute; inset: 0; width: 100%; height: 100%; }
+:root:not([data-skin]) header.top h1 .logo i, :root[data-skin] header.top h1 .logo .lorig { display: none; }
 header.top h1 .logo .lfc { background: var(--logo); -webkit-mask-image: url(ff-logo-face.png); mask-image: url(ff-logo-face.png); }
 header.top h1 .ss {
   flex: 0 0 auto; margin-bottom: 2px; line-height: 1; white-space: nowrap;
@@ -111,7 +114,7 @@ header.top h1 .ss {
 }
 .iconbtn {
   min-width: 44px; height: 44px; border-radius: 12px; border: 2px solid var(--sh);
-  background: var(--cream); color: var(--ink); display: inline-flex; align-items: center; justify-content: center;
+  background: var(--cream); color: var(--btn-ink); display: inline-flex; align-items: center; justify-content: center;
   gap: 6px; padding: 0 12px; font-weight: 900; box-shadow: 3px 3px 0 var(--sh);
   transition: transform .1s ease, box-shadow .1s ease;
 }
@@ -119,7 +122,7 @@ header.top h1 .ss {
 .iconbtn svg { width: 19px; height: 19px; }
 .btn {
   min-height: 54px; width: 100%; padding: 10px 16px; border-radius: 14px; border: 2px solid var(--sh);
-  background: var(--cream); color: var(--ink); font: 900 17px/1.1 "Fraunces", serif; font-variation-settings: "SOFT" 100;
+  background: var(--cream); color: var(--btn-ink); font: 900 17px/1.1 "Fraunces", serif; font-variation-settings: "SOFT" 100;
   box-shadow: 4px 4px 0 var(--sh); transition: transform .1s ease, box-shadow .1s ease;
 }
 .btn.primary { background: var(--orange); color: var(--on-accent); text-shadow: 1px 1px 0 var(--accent-ts); }
@@ -417,6 +420,178 @@ header.top h1 .ss { animation: slapSticker .5s .45s var(--ease) both; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition: none !important; }
 }
+
+/* ================= looks after the posters =================
+   Banner keeps the sticker style above. The other three are flat, like their posters:
+   no hard drop shadows, no outlined/extruded type. */
+:root[data-skin] .card, :root[data-skin] .turn, :root[data-skin] .btn, :root[data-skin] .iconbtn,
+:root[data-skin] .seg, :root[data-skin] .stage .tw, :root[data-skin] .pickhero .img, :root[data-skin] .slist .iconbtn,
+:root[data-skin] .card h2, :root[data-skin] header.top h1 .ss, :root[data-skin] .stage .x, :root[data-skin] .skin { box-shadow: none; }
+:root[data-skin] h2.poster, :root[data-skin] .turn .who, :root[data-skin] .pickhero .title, :root[data-skin] .score .num,
+:root[data-skin] .btn.primary, :root[data-skin] .btn.p1, :root[data-skin] .seg button.on { -webkit-text-stroke: 0; text-shadow: none; }
+:root[data-skin] .btn:active, :root[data-skin] .iconbtn:not(:disabled):active { transform: translateY(2px); box-shadow: none; }
+:root[data-skin] .stage.tappable .tw, :root[data-skin] .stage.picked .tw { box-shadow: none; }
+:root[data-skin] .stage.tappable:active .tw { transform: scale(.97); }
+:root[data-skin] .sheet-card { border: 0; }
+:root[data-skin] .skin.on { box-shadow: none; outline: 3px solid var(--orange); outline-offset: 3px; }
+:root[data-skin] .card h2 { text-shadow: none; }
+
+/* ---------- Tennis: quiet green, cream type, small caps labels, nothing tilted ---------- */
+:root[data-skin="tennis"] .card { background: var(--panel); border: 0; border-radius: 18px; }
+:root[data-skin="tennis"] .card h2 {
+  background: none; padding: 0; border-radius: 0; transform: none; color: var(--orange);
+  font: 800 12px/1.2 "Fraunces", serif; font-variation-settings: "SOFT" 0, "WONK" 0; text-transform: uppercase; letter-spacing: .1em;
+}
+:root[data-skin="tennis"] header.top h1 .ss {
+  background: none; border: 0; padding: 0 0 4px; transform: none; color: var(--cream);
+  font: 900 12px/1 "Fraunces", serif; font-variation-settings: "SOFT" 0, "WONK" 0; text-transform: uppercase; letter-spacing: .08em;
+}
+:root[data-skin="tennis"] h2.poster, :root[data-skin="tennis"] .pickhero .title { text-transform: none; letter-spacing: -.02em; line-height: .95; color: var(--cream); }
+:root[data-skin="tennis"] h2.poster { font-size: clamp(30px, 10vw, 40px); text-align: left; overflow-wrap: anywhere; }
+:root[data-skin="tennis"] .btn, :root[data-skin="tennis"] .iconbtn, :root[data-skin="tennis"] .seg { border: 0; border-radius: 999px; }
+:root[data-skin="tennis"] .btn.primary, :root[data-skin="tennis"] .btn.p1 { background: var(--orange); color: var(--on-accent); }
+:root[data-skin="tennis"] .btn.p2 { background: var(--deep); color: var(--cream); box-shadow: inset 0 0 0 2px var(--cream); }
+:root[data-skin="tennis"] .btn.danger { color: #9c2b16; }
+:root[data-skin="tennis"] .seg button { background: var(--panel-2); color: var(--ink-2); }
+:root[data-skin="tennis"] .seg button.on { background: var(--orange); color: var(--on-accent); }
+:root[data-skin="tennis"] .seg button + button { border-left: 1px solid color-mix(in srgb, var(--cream) 25%, transparent); }
+:root[data-skin="tennis"] input[type=text], :root[data-skin="tennis"] select { border: 0; background: var(--panel-2); color: var(--ink); }
+:root[data-skin="tennis"] .turn { border: 0; border-radius: 18px; }
+:root[data-skin="tennis"] .turn.p1 .who { color: var(--on-accent); }
+:root[data-skin="tennis"] .turn .who { letter-spacing: -.02em; }
+:root[data-skin="tennis"] .turn .pass {
+  background: none; border: 0; padding: 0; transform: none; color: inherit; opacity: .85;
+  font: 800 12px/1.2 "Fraunces", serif; font-variation-settings: "SOFT" 0, "WONK" 0; text-transform: uppercase; letter-spacing: .1em;
+}
+:root[data-skin="tennis"] .score .num { font-size: 64px; color: var(--cream); }
+:root[data-skin="tennis"] .score .mid { background: none; border: 0; transform: none; color: var(--orange); text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+:root[data-skin="tennis"] .stage .tw { border: 0; border-radius: 8px; }
+:root[data-skin="tennis"] .stage.tappable.t-p1 .tw { outline: 3px solid var(--orange); outline-offset: 3px; }
+:root[data-skin="tennis"] .stage.tappable.t-p2 .tw { outline: 3px solid var(--cream); outline-offset: 3px; }
+:root[data-skin="tennis"] .stage.picked .tw { outline: 4px solid var(--orange); outline-offset: 3px; }
+:root[data-skin="tennis"] .stage .name { letter-spacing: .06em; font-size: 13px; }
+:root[data-skin="tennis"] .stage.tappable .tag, :root[data-skin="tennis"] .stage.tappable.t-p1 .tag {
+  background: none; padding: 0; color: var(--orange); text-transform: uppercase; letter-spacing: .1em; font-size: 10px;
+}
+:root[data-skin="tennis"] .stage.tappable.t-p2 .tag { color: var(--cream); }
+:root[data-skin="tennis"] .stage .x { border: 0; border-radius: 999px; transform: translate(-50%, -50%); text-transform: uppercase; letter-spacing: .08em; font-size: 13px; padding: 5px 12px; background: var(--deep); }
+:root[data-skin="tennis"] .stage .x.p1, :root[data-skin="tennis"] .stage .x.pk { background: var(--orange); color: var(--on-accent); }
+:root[data-skin="tennis"] .stage .x.p2 { background: var(--cream); color: var(--on-accent); }
+:root[data-skin="tennis"] .stage .x.pk { border: 0; transform: translate(-50%, -50%); font-size: 14px; }
+:root[data-skin="tennis"] .stage .tag.p1 { color: var(--orange); }
+:root[data-skin="tennis"] .hist .g { background: var(--orange); color: var(--on-accent); transform: none; border-radius: 999px; }
+:root[data-skin="tennis"] .slist .mini { border: 0; }
+:root[data-skin="tennis"] .pickhero .img { border: 0; border-radius: 10px; }
+:root[data-skin="tennis"] .rulesbtn { border: 2px solid var(--cream); border-radius: 999px; background: none; color: var(--cream); }
+:root[data-skin="tennis"] .skin { border: 0; }
+:root[data-skin="tennis"] .stage.fresh .x, :root[data-skin="tennis"] .enter .stage.picked .x,
+:root[data-skin="tennis"] .stage.fresh .x.pk, :root[data-skin="tennis"] .enter .stage.picked .x.pk { animation: stickerFlat .4s var(--ease) both; }
+@keyframes stickerFlat { from { opacity: 0; transform: translate(-50%, -50%) scale(1.6); } to { opacity: 1; transform: translate(-50%, -50%); } }
+
+/* ---------- Grilled: red, cream type, maroon stamps knocked on at an angle ---------- */
+:root[data-skin="grilled"] .card { background: var(--panel); border: 0; border-radius: 16px; }
+:root[data-skin="grilled"] .card h2, :root[data-skin="grilled"] header.top h1 .ss, :root[data-skin="grilled"] .score .mid,
+:root[data-skin="grilled"] .turn .pass, :root[data-skin="grilled"] .hist .g {
+  background: transparent; border: 2.5px solid currentColor; border-radius: 10px; color: var(--deep);
+  font: 900 13px/1.15 "Fraunces", serif; font-variation-settings: "SOFT" 100, "WONK" 1; text-transform: uppercase; letter-spacing: .04em;
+}
+:root[data-skin="grilled"] .card h2 { transform: rotate(-5deg); padding: 5px 10px; }
+:root[data-skin="grilled"] header.top h1 .ss { transform: rotate(-8deg); padding: 4px 8px; margin-bottom: 6px; }
+:root[data-skin="grilled"] .score .mid { transform: rotate(-4deg); padding: 4px 8px; font-size: 11px; }
+:root[data-skin="grilled"] .hist .g { transform: rotate(-4deg); padding: 4px 7px; font-size: 11px; }
+:root[data-skin="grilled"] h2.poster, :root[data-skin="grilled"] .pickhero .title { text-transform: lowercase; letter-spacing: -.01em; line-height: .95; color: var(--cream); }
+:root[data-skin="grilled"] h2.poster { font-size: clamp(30px, 10.5vw, 42px); overflow-wrap: anywhere; }
+:root[data-skin="grilled"] .btn, :root[data-skin="grilled"] .card .iconbtn, :root[data-skin="grilled"] .seg {
+  background: transparent; border: 2.5px solid var(--deep); color: var(--deep); border-radius: 12px;
+}
+:root[data-skin="grilled"] header.top .iconbtn { background: var(--cream); border: 0; color: var(--deep); border-radius: 12px; }
+:root[data-skin="grilled"] .btn.primary, :root[data-skin="grilled"] .btn.p1 { background: var(--orange); border-color: var(--orange); color: var(--cream); }
+:root[data-skin="grilled"] .btn.p2 { background: var(--deep); color: var(--cream); }
+:root[data-skin="grilled"] .seg button { background: transparent; color: var(--deep); }
+:root[data-skin="grilled"] .seg button + button { border-left: 2.5px solid var(--deep); }
+:root[data-skin="grilled"] .seg button.on { background: var(--deep); color: var(--cream); }
+:root[data-skin="grilled"] input[type=text], :root[data-skin="grilled"] select { background: transparent; border: 2.5px solid var(--deep); color: var(--ink); border-radius: 12px; }
+:root[data-skin="grilled"] .turn { border-radius: 16px; }
+:root[data-skin="grilled"] .turn.p1 { background: transparent; border: 3px solid var(--cream); color: var(--cream); }
+:root[data-skin="grilled"] .turn.p1 .pass { color: var(--cream); }
+:root[data-skin="grilled"] .turn.p2, :root[data-skin="grilled"] .turn.neutral { background: var(--deep); border: 0; }
+:root[data-skin="grilled"] .turn.p2 .pass, :root[data-skin="grilled"] .turn.neutral .pass { color: var(--cream); }
+:root[data-skin="grilled"] .turn .pass { transform: rotate(-4deg); padding: 3px 8px; font-size: 11px; }
+:root[data-skin="grilled"] .turn .who { text-transform: lowercase; }
+:root[data-skin="grilled"] .score .num { color: var(--orange); }
+:root[data-skin="grilled"] .stage .tw { border: 0; border-radius: 10px; }
+:root[data-skin="grilled"] .stage.tappable .tw { outline: 3px solid var(--cream); outline-offset: 3px; }
+:root[data-skin="grilled"] .stage.picked .tw { outline: 4px solid var(--cream); outline-offset: 3px; }
+:root[data-skin="grilled"] .stage.tappable .tag, :root[data-skin="grilled"] .stage.tappable.t-p1 .tag {
+  background: transparent; border: 2px solid var(--cream); color: var(--cream); text-transform: uppercase; letter-spacing: .06em; font-size: 10px; transform: rotate(-4deg);
+}
+:root[data-skin="grilled"] .stage .tag.p1, :root[data-skin="grilled"] .stage .tag.p2 { color: var(--cream); }
+:root[data-skin="grilled"] .stage .x { border: 2.5px solid var(--cream); text-transform: uppercase; letter-spacing: .04em; font-size: 14px; background: var(--deep); }
+:root[data-skin="grilled"] .stage .x.p1 { background: var(--orange); color: var(--cream); }
+:root[data-skin="grilled"] .stage .x.pk { background: var(--cream); color: var(--orange-ink); border-color: var(--deep); }
+:root[data-skin="grilled"] .slist .mini, :root[data-skin="grilled"] .pickhero .img { border: 0; }
+:root[data-skin="grilled"] .card.pickhero { background: var(--deep); }
+:root[data-skin="grilled"] .card.pickhero h2 { color: var(--cream); }
+:root[data-skin="grilled"] .rulesbtn { background: transparent; border: 3px solid var(--cream); color: var(--cream); border-radius: 12px; }
+:root[data-skin="grilled"] .skin { border: 2.5px solid var(--deep); }
+
+/* ---------- Cannery: cream paper, blue outlined stamps, big red capitals overprinted ---------- */
+:root[data-skin="cannery"] .card { background: transparent; border: 2.5px solid var(--deep); border-radius: 20px; }
+:root[data-skin="cannery"] .card h2, :root[data-skin="cannery"] header.top h1 .ss, :root[data-skin="cannery"] .score .mid,
+:root[data-skin="cannery"] .turn .pass, :root[data-skin="cannery"] .hist .g {
+  background: var(--bg); border: 2.5px solid var(--deep); border-radius: 10px; color: var(--deep);
+  font: 900 14px/1.15 "Fraunces", serif; font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+:root[data-skin="cannery"] .card h2 { transform: rotate(-6deg); padding: 4px 11px; position: relative; top: -31px; left: -8px; margin-bottom: -22px; }
+:root[data-skin="cannery"] .card { margin-top: 28px; }
+:root[data-skin="cannery"] header.top h1 .ss { transform: rotate(-10deg); padding: 3px 8px; margin-bottom: 6px; }
+:root[data-skin="cannery"] .score .mid { transform: rotate(-4deg); padding: 4px 8px; font-size: 12px; }
+:root[data-skin="cannery"] .hist .g { transform: rotate(-6deg); padding: 4px 7px; font-size: 12px; }
+:root[data-skin="cannery"] h2.poster, :root[data-skin="cannery"] .pickhero .title, :root[data-skin="cannery"] .turn .who {
+  text-transform: uppercase; letter-spacing: -.01em; line-height: .9; mix-blend-mode: multiply;
+}
+:root[data-skin="cannery"] h2.poster { font-size: clamp(28px, 9.6vw, 46px); color: var(--orange); overflow-wrap: anywhere; }
+:root[data-skin="cannery"] .pickhero .title { color: var(--orange); font-size: 40px; }
+:root[data-skin="cannery"] .btn, :root[data-skin="cannery"] .iconbtn, :root[data-skin="cannery"] .seg {
+  background: transparent; border: 2.5px solid var(--deep); color: var(--ink); border-radius: 14px;
+}
+:root[data-skin="cannery"] .btn.primary, :root[data-skin="cannery"] .btn.p1 { background: var(--orange); border-color: var(--orange); color: var(--cream); }
+:root[data-skin="cannery"] .btn.p2 { background: var(--deep); color: var(--cream); }
+:root[data-skin="cannery"] .seg button { background: transparent; color: var(--ink); }
+:root[data-skin="cannery"] .seg button + button { border-left: 2.5px solid var(--deep); }
+:root[data-skin="cannery"] .seg button.on { background: var(--orange); color: var(--cream); }
+:root[data-skin="cannery"] input[type=text], :root[data-skin="cannery"] select { background: transparent; border: 2.5px solid var(--deep); color: var(--ink); }
+/* turn: no box fill, the player's colour in big overprinted capitals */
+:root[data-skin="cannery"] .turn { background: transparent; border: 2.5px solid var(--deep); border-radius: 20px; color: var(--ink); }
+:root[data-skin="cannery"] .turn.p1 { border-color: var(--orange); }
+:root[data-skin="cannery"] .turn .who { font-size: 34px; color: var(--deep); }
+:root[data-skin="cannery"] .turn.p1 .who { color: var(--orange); }
+:root[data-skin="cannery"] .turn .pass { transform: rotate(-5deg); padding: 3px 8px; font-size: 12px; }
+:root[data-skin="cannery"] .turn.p1 .pass { color: var(--orange); border-color: var(--orange); }
+/* score: blue names printed over big red numbers */
+:root[data-skin="cannery"] .score .num { font-size: 72px; color: var(--orange); mix-blend-mode: multiply; line-height: .8; }
+:root[data-skin="cannery"] .score .nm { position: relative; z-index: 1; margin-bottom: -.55em; mix-blend-mode: multiply; color: var(--deep); font-size: 20px; }
+:root[data-skin="cannery"] .score .pl.a .nm, :root[data-skin="cannery"] .score .pl.b .nm { color: var(--deep); }
+:root[data-skin="cannery"] .stage .tw { border: 2.5px solid var(--deep); border-radius: 12px; }
+:root[data-skin="cannery"] .stage.tappable.t-p1 .tw { border-color: var(--orange); outline: 2.5px solid var(--orange); outline-offset: 3px; }
+:root[data-skin="cannery"] .stage.tappable.t-p2 .tw { outline: 2.5px solid var(--deep); outline-offset: 3px; }
+:root[data-skin="cannery"] .stage.picked .tw { border-color: var(--orange); outline: 3px solid var(--orange); outline-offset: 3px; }
+:root[data-skin="cannery"] .stage.struck .tw, :root[data-skin="cannery"] .stage.banned .tw, :root[data-skin="cannery"] .stage.locked .tw { border-color: var(--muted); }
+:root[data-skin="cannery"] .stage .name { color: var(--ink); }
+:root[data-skin="cannery"] .stage.tappable .tag { background: transparent; border: 2px solid var(--deep); color: var(--deep); transform: rotate(-4deg); }
+:root[data-skin="cannery"] .stage.tappable.t-p1 .tag { background: transparent; border-color: var(--orange); color: var(--orange); }
+:root[data-skin="cannery"] .stage .tag.p1 { color: var(--orange-ink); }
+:root[data-skin="cannery"] .stage .tag.p2 { color: var(--p2-ink); }
+:root[data-skin="cannery"] .stage .tag.pk, :root[data-skin="cannery"] .stage .tag.lk { color: var(--ink); }
+:root[data-skin="cannery"] .stage .x { border: 2.5px solid var(--cream); background: var(--deep); font-size: 15px; }
+:root[data-skin="cannery"] .stage .x.p1 { background: var(--orange); }
+:root[data-skin="cannery"] .stage .x.pk { background: var(--cream); color: var(--orange-ink); border-color: var(--orange); }
+:root[data-skin="cannery"] .slist .mini, :root[data-skin="cannery"] .pickhero .img { border-color: var(--deep); }
+:root[data-skin="cannery"] .card.pickhero { background: transparent; color: var(--ink); }
+:root[data-skin="cannery"] .card.pickhero .sub, :root[data-skin="cannery"] .card.pickhero .muted { color: var(--muted); }
+:root[data-skin="cannery"] .rulesbtn { background: transparent; border: 2.5px solid var(--deep); color: var(--ink); }
+:root[data-skin="cannery"] .skin { border: 2.5px solid var(--deep); }
+:root[data-skin="cannery"] .turn::after { background: var(--orange); }
 </style>
 <style>
 /* what the Artifact viewer's wrapper used to provide */
@@ -429,7 +604,7 @@ img { max-width: 100%; }
 <body>
 <div class="wrap">
   <header class="top">
-    <h1><span class="logo" role="img" aria-label="Flashbacks &amp; Friendlies"><i class="lsh"></i><i class="lfc"></i></span><span class="ss">stage strike</span></h1>
+    <h1><span class="logo" role="img" aria-label="Flashbacks &amp; Friendlies"><img class="lorig" src="ff-logo.png" alt=""><i class="lsh"></i><i class="lfc"></i></span><span class="ss">stage strike</span></h1>
     <button class="iconbtn" id="navBtn" data-action="nav" aria-label="Settings"></button>
   </header>
   <main id="app"></main>
@@ -446,8 +621,8 @@ img { max-width: 100%; }
     <div class="card">
       <h2>the set</h2>
       <ul class="rules-list">
-        <li>1-2-1 stage bans to start the set. Higher seed bans first.</li>
-        <li>After each game the winner bans three stages.</li>
+        <li>1-2-1 stage strikes to start the set. Higher seed strikes first.</li>
+        <li>After each game the winner strikes three stages.</li>
         <li>Dave's Stupid Rule is on.</li>
         <li>You can always gentleman's to any stage you both agree on.</li>
       </ul>
@@ -567,7 +742,7 @@ const KEY_SKIN = "hdrStageStrike.skin";
 const SKINS = {
   banner:  { name: "Banner",  bg: "#6865a6", fg: "#fde9d3", dots: ["#fde9d3", "#f08a2b", "#3a2f75"] },
   tennis:  { name: "Tennis",  bg: "#007c3e", fg: "#ece7da", dots: ["#ece7da", "#dfe3a3", "#0b4d2b"] },
-  grilled: { name: "Grilled", bg: "#f5391c", fg: "#ece6d8", dots: ["#ece6d8", "#ffb52e", "#6b1a10"] },
+  grilled: { name: "Grilled", bg: "#f5391c", fg: "#ece6d8", dots: ["#ece6d8", "#6b1a10", "#f5391c"] },
   cannery: { name: "Cannery", bg: "#ddd5c6", fg: "#1d5a88", dots: ["#5ea6d6", "#e8361a", "#f7f2e8"] },
 };
 function load(key) {
@@ -681,6 +856,8 @@ function turn() {
       cum += c.order[i];
       if (c.struck.length < cum) {
         const left = Math.min(cum - c.struck.length, remaining.length - 1);
+        // striking down to one stage is the same as choosing it, so let them choose
+        if (left >= remaining.length - 1) return { action: "pick", player: (c.first + i) % 2, remaining };
         return { action: "strike", player: (c.first + i) % 2, left };
       }
     }
@@ -711,10 +888,14 @@ function tapStage(id) {
     });
   } else if (t.action === "pick" && c.type === "strike") {
     if (!t.remaining.includes(id)) return;
-    (ui.fresh = id), commit(() => finishPick(id, false));
+    (ui.fresh = id), commit(() => {
+      // record the stages they passed on as their strikes, so the history still reads 1-2-1
+      t.remaining.forEach(x => { if (x !== id) c.struck.push({ id: x, by: t.player }); });
+      finishPick(id, false);
+    });
   } else if (t.action === "ban") {
     if (c.bans.includes(id)) return;
-    // never let a ban leave the counterpicker with nothing legal to pick
+    // never let a strike leave the counterpicker with nothing legal to pick
     if (t.selectable.length <= 1 && t.selectable.includes(id)) { flash("That would leave nothing legal to pick."); return; }
     (ui.fresh = id), commit(() => { c.bans.push(id); });
   } else if (t.action === "pick") {
@@ -880,7 +1061,7 @@ function renderGame() {
   } else if (t.action === "pick" && c.type === "strike") {
     h += banner(p, "Pass to " + pname(p), pname(p) + " picks", "");
   } else if (t.action === "ban") {
-    h += banner(p, "Game " + (set.games.length + 1) + " · pass to " + pname(p), pname(p) + " bans " + t.left, "");
+    h += banner(p, "Game " + (set.games.length + 1) + " · pass to " + pname(p), pname(p) + " strikes " + t.left, "");
   } else {
     h += banner(p, "Pass to " + pname(p), pname(p) + " picks", "");
   }
@@ -902,9 +1083,9 @@ function stagesHTML(t, readOnly) {
     } else {
       const locked = lockedFor(c.picker, c.clause);
       if (c.stage === id || (c.random && id === RANDOM_ID)) { cls += " picked"; tag = id === RANDOM_ID ? "" : (c.random ? "random" : ""); tagCls = "pk"; x = id === RANDOM_ID ? "Picked" : (c.random ? "Rolled" : "Picked"); disabled = true; }
-      else if (c.bans.includes(id)) { cls += " banned"; tag = pname(c.banner); tagCls = "p" + (c.banner + 1); x = "Banned"; disabled = true; }
+      else if (c.bans.includes(id)) { cls += " banned"; tag = pname(c.banner); tagCls = "p" + (c.banner + 1); x = "Struck"; disabled = true; }
       else if (c.stage) { disabled = true; if (locked.has(id)) tag = c.clause === "norepeat" ? "Already played" : "DSR"; }
-      else if (t.action === "ban") { tag = locked.has(id) ? "ban · " + clauseShort(c.clause) : "ban"; }
+      else if (t.action === "ban") { tag = locked.has(id) ? "strike · " + clauseShort(c.clause) : "strike"; }
       else if (locked.has(id)) { cls += " locked"; tag = ""; tagCls = "lk"; x = clauseShort(c.clause); disabled = true; }
       else if (id === RANDOM_ID && !t.selectable.length) { cls += " locked"; tag = ""; disabled = true; }
       else tag = "pick";
@@ -916,7 +1097,7 @@ function stagesHTML(t, readOnly) {
       <span class="info"><span class="name">${esc(s.name)}</span>${tag ? `<span class="tag ${tagCls}">${esc(tag)}</span>` : ""}</span>
     </button>`;
   }).join("");
-  const label = c.type === "strike" ? "Starters" : "Bans & counterpicks";
+  const label = c.type === "strike" ? "Starters" : "Starters & counterpicks";
   return `<section class="stagecard"><h2 class="poster">${label}</h2><div class="stages">${cards}</div></section>`;
 }
 function clauseShort(cl) { return cl === "norepeat" ? "No repeats" : cl === "mdsr" ? "MDSR" : "DSR"; }
@@ -957,18 +1138,18 @@ function renderSettings() {
     <h2>Counterpicks</h2>
     ${listHTML("counterpicks")}
     ${addHTML("counterpicks")}
-    <p class="muted small" style="margin:10px 0 0">From game 2, the winner bans from starters and counterpicks together. “Random” rolls a legal stage that isn't banned.</p>
+    <p class="muted small" style="margin:10px 0 0">From game 2, the winner strikes from starters and counterpicks together. “Random” rolls a legal stage that isn't struck.</p>
   </div>
   <div class="card">
     <h2>Rules</h2>
     <label class="field"><span>Strike order for game 1</span>
       <input type="text" id="strikeOrder" value="${esc(settings.strikeOrder)}" inputmode="numeric" autocomplete="off"></label>
     ${orderMsg}
-    <div class="field"><span class="muted small">Bans by the winner (game 2+)</span>
+    <div class="field"><span class="muted small">Strikes by the winner (game 2+)</span>
       <div class="stepper" style="margin-top:4px">
-        <button class="iconbtn" data-action="bans" data-d="-1" aria-label="Fewer bans">−</button>
+        <button class="iconbtn" data-action="bans" data-d="-1" aria-label="Fewer strikes">−</button>
         <span class="val">${settings.bans}</span>
-        <button class="iconbtn" data-action="bans" data-d="1" aria-label="More bans" ${settings.bans >= pool - 1 ? "disabled" : ""}>+</button>
+        <button class="iconbtn" data-action="bans" data-d="1" aria-label="More strikes" ${settings.bans >= pool - 1 ? "disabled" : ""}>+</button>
       </div>
     </div>
     <label class="field"><span>Stage clause</span>
@@ -988,7 +1169,7 @@ function renderSettings() {
     <p class="muted small" style="margin:0">Starters: Hollow Bastion, Garreg Mach Monastery, Battlefield, Smashville, Frigate Husk. Counterpicks: Fountain of Dreams, Realm of Gamecube, Bramble Blast, Sky Sanctuary Zone.</p>
     <button class="btn" data-action="preset" data-k="hdr">HDR official tourney list</button>
     <p class="muted small" style="margin:0">Same starters. Counterpicks: Northern Cave, Realm of Gamecube, Random, Bramble Blast, Sky Sanctuary Zone.</p>
-    <p class="muted small" style="margin:0">A preset replaces the stage lists and keeps your bans, strike order and clause. Gentlemen's agreement is always allowed: just pick the stage together in game.</p>
+    <p class="muted small" style="margin:0">A preset replaces the stage lists and keeps your strike counts, strike order and clause. Gentlemen's agreement is always allowed: just pick the stage together in game.</p>
   </div>
   <p class="foot">everyone is here · no johns<br>Stage names and pictures are from HewDraw Remix's stage select. Saved on this device only.</p>`;
 }
