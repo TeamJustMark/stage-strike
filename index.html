@@ -1166,8 +1166,7 @@ function renderSettings() {
     <button class="btn primary" data-action="preset" data-k="ff2026">Flashbacks &amp; Friendlies 2026</button>
     ${settings.lists.map((l, i) => `<div class="userlist"><button class="btn" data-action="preset" data-k="u${i}">${esc(l.name)}</button><button class="iconbtn" data-action="dellist" data-i="${i}" aria-label="Delete ${esc(l.name)}">${ICON.x}</button></div>`).join("")}
     ${ui.addList ? `<div class="addrow"><input type="text" id="listName" placeholder="Name this list" maxlength="40" autocomplete="off"><button class="iconbtn" data-action="saveList">Save</button></div>` : `<button class="btn" data-action="addList">Add a stage list</button>`}
-  </div>
-  <p class="foot">everyone is here · no johns<br>Stage names and pictures are from HewDraw Remix's stage select. Saved on this device only.</p>`;
+  </div>`;
 }
 function listHTML(key) {
   const list = settings[key];
